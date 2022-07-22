@@ -52,8 +52,10 @@
     <!-- actions -->
     <record model="ir.actions.act_window" id="exemple_module.action_window">
       <field name="name">exemple_module</field>
+      <field name="description">exemple_module</field>
+
       <field name="res_model">exemple_module.exemple_module</field>
-      <field name="view_mode">kanban,tree,form</field>
+      <field name="view_mode">tree,form</field>
     </record>
 
 <!--    >       -->
