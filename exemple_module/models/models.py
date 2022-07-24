@@ -2,7 +2,7 @@
 
 from odoo import models, fields, api
 
-
+#publishers
 class exemple_module(models.Model):
     _name = 'exemple_module.exemple_module'
     _description = 'exemple_module.exemple_module'
@@ -12,18 +12,21 @@ class exemple_module(models.Model):
     value2 = fields.Float(compute="_value_pc", store=True)
     description = fields.Text()
 
-    parent_field=fields.Many2one('exemple_module.exemple2','child_field')
+    child_field_id=fields.One2many('exemple_module.exemple2', 'parent_field_id', String="Published books")
 
     @api.depends('value')
     def _value_pc(self):
-        for record in self:
-            record.value2 = float(record.value) / 100
+        self.value2 = float(self.value) / 100
 
+#books
 class exemple_module2(models.Model):
     _name = 'exemple_module.exemple2'
     _description = 'child model'
-
     name = fields.Char()
     value = fields.Integer()
-    
-    child_field=fields.One2many('exemple_module.exemple_module')
+
+    parent_field_id = fields.Many2one('exemple_module.exemple_module', String="Publisher")
+
+
+
+    # child_field_id=fields.One2many('exemple_module.exemple_module', 'parent_field')
