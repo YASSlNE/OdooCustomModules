@@ -10,6 +10,7 @@
           <field name="name"/>
           <field name="value"/>
           <field name="value2"/>
+
         </tree>
       </field>
     </record>

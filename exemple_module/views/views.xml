@@ -19,6 +19,7 @@
           <field name="description"/>
           <field name="value"/>
           <field name="value2"/>
+          <field name="parent_field_id"/>
         </tree>
       </field>
     </record>
@@ -33,10 +34,17 @@
         <!--          </group>          -->
         <field name="arch" type="xml">
           <form string="Idea form">
+<!--            <header>-->
+<!--             <button type="object"-->
+<!--             name="open_commercial_entity"-->
+<!--             string="Open commercial partner"-->
+<!--             class="oe_highlight" />-->
+<!--           </header>-->
               <group colspan="4" col="3">
                   <field name="value" string="Value"/>
                   <field name="value2" string="Value2"/>
                   <field name="description" string="Description"/>
+                  <field name="parent_field_id"/>
               </group>
             </form>
       </field>
