@@ -49,34 +49,61 @@
 
 
 
+<!--      VIEWS     -->
+
     <record model="ir.ui.view" id="clinique.view_patients">
       <field name="name">Liste des Patients</field>
       <field name="model">clinique.patient</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="nom"/>
-            <field name="prenom"/>
-            <field name="age"/>
+          <field name="name"/>
+            <field name="date_patient"/>
             <field name="docteur_id"/>
         </tree>
       </field>
     </record>
-
-
 
       <record model="ir.ui.view" id="clinique.view_docteurs">
       <field name="name">Liste des Docteurs</field>
       <field name="model">clinique.docteur</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="nom"/>
-            <field name="prenom"/>
-            <field name="age"/>
+          <field name="name"/>
+            <field name="date_docteur"/>
             <field name="specialite"/>
         </tree>
       </field>
     </record>
 
+<!--      VIEWS-->
+
+
+
+
+
+<!--      FORMS-->
+
+      <record id="docteur_form_id" model="ir.ui.view">
+            <field name="name">clinique.docteur.form</field>
+            <field name="model">clinique.docteur</field>
+            <field name="arch" type="xml">
+                <form string="Formulaire du docteur">
+                    <header>
+                        <field name="state" widget="statusbar" status_visible="name,dateDeNaissance,specialite"/>
+                    </header>
+                        <tree>
+                            <group>
+                            <field name="name" />
+                            <field name="date_docteur" />
+                            <field name="specialite" />
+                            </group>
+                        </tree>
+                </form>
+            </field>
+      </record>
+
+
+<!--      FORMS-->
 
   </data>
 </odoo>
