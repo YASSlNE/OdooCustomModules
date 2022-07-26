@@ -20,7 +20,7 @@ class Docteur(models.Model):
 
 class Patient(models.Model):
     _name = 'clinique.patient'
-    _description = 'Modele du patient'
+    _description = 'Modele du pati1ent'
 
     nom = fields.Char()
     prenom = fields.Char()

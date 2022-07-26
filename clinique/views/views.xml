@@ -1,68 +1,35 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="clinique.list">
-      <field name="name">Clinique list</field>
-      <field name="model">clinique.clinique</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
-      </field>
-    </record>
--->
 
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="clinique.action_window">
-      <field name="name">Clinique window</field>
-      <field name="res_model">clinique.clinique</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
-
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="clinique.action_server">
-      <field name="name">Clinique server</field>
-      <field name="model_id" ref="model_clinique_clinique"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
-
-    <!-- Top menu item -->
-<!--
-    <menuitem name="Clinique" id="clinique.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="clinique.menu_1" parent="clinique.menu_root"/>
-    <menuitem name="Menu 2" id="clinique.menu_2" parent="clinique.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="clinique.menu_1_list" parent="clinique.menu_1"
-              action="clinique.action_window"/>
-    <menuitem name="Server to list" id="clinique" parent="clinique.menu_2"
-              action="clinique.action_server"/>
--->
+<!--    LES MENUS -->
 
 
-    <record model="ir.actions.act_window" id="clinique.action_docteurs">
-      <field name="name">Les Docteurs</field>
-      <field name="res_model">clinique.docteur</field>
-      <field name="view_mode">tree,kanban,form</field>
-    </record>
+
+    <menuitem name="Clinique" id="clinique" />
+
+
+    <menuitem name="Patients" id="patients" parent="clinique"
+              action="clinique.action_patients" sequence="2"/>
+
+
+    <menuitem name="Docteurs" id="docteurs" parent="clinique"
+              action="clinique.action_docteurs" sequence="1"/>
+
+
+
+<!--    LES MENUS-->
+
+
+
+
+
+<!--ACTIONS-->
+
+<!--    <record model="ir.actions.act_window" id="clinique.action_docteurs">-->
+<!--      <field name="name">Les Docteurs</field>-->
+<!--      <field name="res_model">clinique.docteur</field>-->
+<!--      <field name="view_mode">tree,kanban,form</field>-->
+<!--    </record>-->
 
     <record model="ir.actions.act_window" id="clinique.action_patients">
       <field name="name">Les Patients</field>
@@ -71,11 +38,45 @@
     </record>
 
 
-    <menuitem name="Clinique" id="clinique" />
+      <record model="ir.actions.act_window" id="clinique.action_docteurs">
+      <field name="name">Les Docteurs</field>
+      <field name="res_model">clinique.docteur</field>
+      <field name="view_mode">tree,kanban,form</field>
+    </record>
 
-    <menuitem name="Docteurs" id="docteurs" parent="clinique"
-              action="clinique.action_docteurs" />
-    <menuitem name="Patients" id="patients" parent="clinique"
-              action="clinique.action_patients" />
+<!--ACTIONS-->
+
+
+
+
+    <record model="ir.ui.view" id="clinique.view_patients">
+      <field name="name">Liste des Patients</field>
+      <field name="model">clinique.patient</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nom"/>
+            <field name="prenom"/>
+            <field name="age"/>
+            <field name="docteur_id"/>
+        </tree>
+      </field>
+    </record>
+
+
+
+      <record model="ir.ui.view" id="clinique.view_docteurs">
+      <field name="name">Liste des Docteurs</field>
+      <field name="model">clinique.docteur</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nom"/>
+            <field name="prenom"/>
+            <field name="age"/>
+            <field name="specialite"/>
+        </tree>
+      </field>
+    </record>
+
+
   </data>
 </odoo>
