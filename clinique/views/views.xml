@@ -128,7 +128,6 @@
                     </header>
                         <tree>
                             <group>
-
                                 <field name="name" attrs="{'invisible': [('state', '!=', 'name')]}"/>
                                 <field name="date_patient" attrs="{'invisible': [('state', '!=', 'dateDeNaissance')]}" />
                                 <field name="docteur_id" attrs="{'invisible': [('state', '!=', 'docteur')]}" />
