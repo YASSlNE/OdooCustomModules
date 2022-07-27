@@ -59,6 +59,7 @@
           <field name="name"/>
             <field name="date_patient"/>
             <field name="docteur_id"/>
+            <field name="age"/>
         </tree>
       </field>
     </record>
@@ -68,9 +69,13 @@
       <field name="model">clinique.docteur</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
+<!--            attrs="{'invisible': [('state', '!=', 'in_queue')]}"-->
+<!--            <div name="name">-->
+<!--            <div name="name">-->
+          <field name="name" />
             <field name="date_docteur"/>
             <field name="specialite"/>
+            <field name="age" />
         </tree>
       </field>
     </record>
@@ -89,13 +94,45 @@
             <field name="arch" type="xml">
                 <form string="Formulaire du docteur">
                     <header>
+                        <button type="object" name="to_date" string="Next" states="name" class="oe_highlight" />
+                        <button type="object" name="to_specialite" string="Next" states="dateDeNaissance" class="oe_highlight" />
+<!--                        <button type="object" name="to_store" string="Confirm" states="specialite" class="oe_highlight" />-->
                         <field name="state" widget="statusbar" status_visible="name,dateDeNaissance,specialite"/>
                     </header>
                         <tree>
                             <group>
-                            <field name="name" />
-                            <field name="date_docteur" />
-                            <field name="specialite" />
+
+                                <field name="name" attrs="{'invisible': [('state', '!=', 'name')]}"/>
+                                <field name="date_docteur" attrs="{'invisible': [('state', '!=', 'dateDeNaissance')]}" />
+                                <field name="specialite" attrs="{'invisible': [('state', '!=', 'specialite')]}" />
+                                <field name="age"  attrs="{'invisible': [('state', '!=', 'dateDeNaissance')]}"/>
+                            </group>
+                        </tree>
+                </form>
+            </field>
+      </record>
+
+
+
+
+      <record id="patient_form_id" model="ir.ui.view">
+            <field name="name">clinique.patient.form</field>
+            <field name="model">clinique.patient</field>
+            <field name="arch" type="xml">
+                <form string="Formulaire du patient">
+                    <header>
+                        <button type="object" name="to_date" string="Next" states="name" class="oe_highlight" />
+                        <button type="object" name="to_docteur" string="Next" states="dateDeNaissance" class="oe_highlight" />
+<!--                        <button type="object" name="to_store" string="Confirm" states="specialite" class="oe_highlight" />-->
+                        <field name="state" widget="statusbar" status_visible="name,dateDeNaissance,docteur"/>
+                    </header>
+                        <tree>
+                            <group>
+
+                                <field name="name" attrs="{'invisible': [('state', '!=', 'name')]}"/>
+                                <field name="date_patient" attrs="{'invisible': [('state', '!=', 'dateDeNaissance')]}" />
+                                <field name="docteur_id" attrs="{'invisible': [('state', '!=', 'docteur')]}" />
+                                <field name="age"  attrs="{'invisible': [('state', '!=', 'dateDeNaissance')]}"/>
                             </group>
                         </tree>
                 </form>
