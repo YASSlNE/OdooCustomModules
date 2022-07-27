@@ -41,7 +41,7 @@
       <record model="ir.actions.act_window" id="clinique.action_docteurs">
       <field name="name">Les Docteurs</field>
       <field name="res_model">clinique.docteur</field>
-      <field name="view_mode">tree,kanban,form</field>
+      <field name="view_mode">kanban,tree,form</field>
     </record>
 
 <!--ACTIONS-->
@@ -64,19 +64,44 @@
       </field>
     </record>
 
+
       <record model="ir.ui.view" id="clinique.view_docteurs">
       <field name="name">Liste des Docteurs</field>
       <field name="model">clinique.docteur</field>
       <field name="arch" type="xml">
         <tree>
-<!--            attrs="{'invisible': [('state', '!=', 'in_queue')]}"-->
-<!--            <div name="name">-->
-<!--            <div name="name">-->
           <field name="name" />
             <field name="date_docteur"/>
             <field name="specialite"/>
             <field name="age" />
         </tree>
+      </field>
+    </record>
+
+
+
+      <record model="ir.ui.view" id="clinique.view_docteurs_kanban">
+      <field name="name">Liste des Docteurs</field>
+      <field name="model">clinique.docteur</field>
+      <field name="arch" type="xml">
+        <kanban>
+                <field name="name" />
+                <field name="date_docteur"/>
+                <field name="specialite"/>
+                <field name="age" />
+        <templates>
+            <t t-name="kanban-box">
+                <div class="oe_kanban_card bg-primary d-flex flex-column shadow">
+                    <div class="font-weight-bolder">
+                        <field name="name"/>
+                    </div>
+                        <field name="date_docteur"/>
+                        <field name="specialite"/>
+                        <field name="age"/>
+                 </div>
+            </t>
+        </templates>
+          </kanban>
       </field>
     </record>
 
@@ -101,7 +126,6 @@
                     </header>
                         <tree>
                             <group>
-
                                 <field name="name" attrs="{'invisible': [('state', '!=', 'name')]}"/>
                                 <field name="date_docteur" attrs="{'invisible': [('state', '!=', 'dateDeNaissance')]}" />
                                 <field name="specialite" attrs="{'invisible': [('state', '!=', 'specialite')]}" />
