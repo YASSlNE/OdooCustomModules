@@ -6,7 +6,6 @@ from datetime import date
 class Docteur(models.Model):
     _name = 'clinique.docteur'
     _description = 'Modele du docteur'
-
     name = fields.Char()
     date_docteur = fields.Date('Date de naissance', default=fields.Datetime.now)
     specialite = fields.Selection(
@@ -14,17 +13,17 @@ class Docteur(models.Model):
          ('reanimation', 'Réanimation'),
          ('urgence', 'Urgence')],
         'Spécialité')
-    patient_id = fields.One2many('clinique.patient', 'docteur_id')
-    state = fields.Selection([
-        ('name', 'Name'),
-        ('dateDeNaissance', 'Date de naissance'),
-        ('specialite', 'Spécialité'),
-    ], string='Status', readonly=True, default='name')
+    # patient_id = fields.One2many('clinique.patient', 'docteur_id')
+    # state = fields.Selection([
+    #     ('name', 'Name'),
+    #     ('dateDeNaissance', 'Date de naissance'),
+    #     ('specialite', 'Spécialité'),
+    # ], string='Status', readonly=True, default='name')
     age = fields.Integer(compute="calculate_age", readonly=True, store=True)
-    def to_date(self):
-        self.state = 'dateDeNaissance'
-    def to_specialite(self):
-        self.state =  'specialite'
+    # def to_date(self):
+    #     self.state = 'dateDeNaissance'
+    # def to_specialite(self):
+    #     self.state =  'specialite'
 
     @api.depends('date_docteur')
     def calculate_age(self):
@@ -42,19 +41,31 @@ class Patient(models.Model):
     _description = 'Modele du patient'
     name = fields.Char()
     date_patient = fields.Date('Date de naissance', default=fields.Datetime.now)
-    docteur_id = fields.Many2one('clinique.docteur')
+    # docteur_id = fields.Many2one('clinique.docteur')
     age = fields.Integer(compute="calculate_age", store=True)
-    state = fields.Selection([
-        ('name', 'Name'),
-        ('dateDeNaissance', 'Date de naissance'),
-        ('docteur', 'Docteur'),
-    ], string='Status', readonly=True, default='name')
-    def to_date(self):
-        self.state = 'dateDeNaissance'
-    def to_docteur(self):
-        self.state = 'docteur'
-
+    # state = fields.Selection([
+    #     ('name', 'Name'),
+    #     ('dateDeNaissance', 'Date de naissance'),
+    #     ('docteur', 'Docteur'),
+    # ], string='Status', readonly=True, default='name')
+    # def to_date(self):
+    #     self.state = 'dateDeNaissance'
+    # def to_docteur(self):
+    #     self.state = 'docteur'
     @api.depends('date_patient')
     def calculate_age(self):
         today = date.today()
         self.age = today.year - self.date_patient.year - ((today.month, today.day) < (self.date_patient.month, self.date_patient.day))
+
+
+class RDV(models.Model):
+    _name = 'clinique.rdv'
+    _description = 'Les rendez vous'
+    patient = fields.Many2one('clinique.patient')
+    docteur = fields.Many2one('clinique.docteur')
+    date = fields.Date('Date du rendez vous', default=fields.Datetime.now)
+    state = fields.Selection([
+        ('details', 'Details'),
+        ('attendant', 'Attendant la confirmation du Docteur'),
+        ('confirmation', 'Rendez vous confirmé'),
+    ], string='details', readonly=True, default='name')
