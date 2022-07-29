@@ -3,16 +3,19 @@
 from odoo import models, fields, api
 from datetime import date
 
+class Specialites(models.Model):
+    _name = 'clinique.specialites'
+    _description = 'Les spécialités des docteurs'
+    name = fields.Char()
+
+
 class Docteur(models.Model):
     _name = 'clinique.docteur'
     _description = 'Modele du docteur'
     name = fields.Char()
     date_docteur = fields.Date('Date de naissance', default=fields.Datetime.now)
-    specialite = fields.Selection(
-        [('cardiologie', 'Cardiologie'),
-         ('reanimation', 'Réanimation'),
-         ('urgence', 'Urgence')],
-        'Spécialité')
+    specialite = fields.Many2many('clinique.specialites')
+    # specialiste = fields.Char(related = 'specialite_id.name')
     # patient_id = fields.One2many('clinique.patient', 'docteur_id')
     # state = fields.Selection([
     #     ('name', 'Name'),
@@ -63,9 +66,18 @@ class RDV(models.Model):
     _description = 'Les rendez vous'
     patient = fields.Many2one('clinique.patient')
     docteur = fields.Many2one('clinique.docteur')
+    specialiste = fields.Many2many(related="docteur.specialite", readonly=True, relation = "clinique.specialites")
+    # company_currency = fields.Many2one(string='Currency', related='company_id.currency_id', readonly=True, relation="res.currency")
+
     date = fields.Date('Date du rendez vous', default=fields.Datetime.now)
+    # specialite_patient = fields.Char(related='docteur.specialite', default="sdmlkfjsqdmfklj")
+
     state = fields.Selection([
-        ('details', 'Details'),
+        ('draft', 'Draft'),
         ('attendant', 'Attendant la confirmation du Docteur'),
         ('confirmation', 'Rendez vous confirmé'),
-    ], string='details', readonly=True, default='name')
+    ], string='state', readonly=True, default='draft')
+    def patient_ready(self):
+        self.state='attendant'
+    def docteur_ready(self):
+        self.state='confirmation'

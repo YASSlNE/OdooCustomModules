@@ -106,11 +106,12 @@
       <field name="name">Liste des Docteurs</field>
       <field name="model">clinique.docteur</field>
       <field name="arch" type="xml">
-        <kanban>
+        <kanban colors="red:state=='draft'">
                 <field name="name" />
                 <field name="date_docteur"/>
                 <field name="specialite"/>
                 <field name="age" />
+<!--                <progressbar field="state" colors='{"confirmation": "success", "attendant": "warning", "draft": "danger"}'/>-->
         <templates>
             <t t-name="kanban-box">
                 <div class="oe_kanban_card oe_kanban_global_click bg-primary d-flex flex-column shadow">
@@ -131,14 +132,82 @@
       </field>
     </record>
 
+
+      <record model="ir.ui.view" id="clinique.view_rdvs_kanban">
+      <field name="name">Liste des RDVs</field>
+      <field name="model">clinique.rdv</field>
+      <field name="arch" type="xml">
+        <kanban>
+                <field name="docteur" />
+                <field name="patient"/>
+                <field name="date"/>
+                <field name="state" />
+
+        <templates>
+            <t t-name="kanban-box">
+                <div class="oe_kanban_card bg-danger border border-dark rounded oe_kanban_global_click d-flex flex-column shadow">
+                    <ul>
+                        <h1><strong>
+                            <field name="docteur"/>
+                        </strong></h1>
+                        <h2><li><field name="patient"/></li></h2>
+                        <h2><li><field name="date"/></li></h2>
+                        <h2 style = "color: grey" attrs="{'invisible': ['|', ('state','=','attendant'), ('state','=','confirmation')]}"><field name="state"/></h2>
+                        <h2 style = "color: yellow" attrs="{'invisible': ['|', ('state','=','draft'), ('state','=','confirmation')]}"><field name="state"/></h2>
+                        <h2 style = "color: green" attrs="{'invisible': ['|', ('state','=','draft'), ('state','=','attendant')]}"><field name="state"/></h2>
+                        <h3><a attrs="{'invisible': ['|', ('state','=','draft'), ('state','=','confirmation')]}" href="#" type="object" name="docteur_ready" string="Confirmer" class="oe_highlight btn btn-success">Confirmer</a></h3>
+
+                    </ul>
+                 </div>
+            </t>
+        </templates>
+          </kanban>
+      </field>
+    </record>
+
 <!--      VIEWS-->
 
 
 
 
 
-<!--      FORMS-->
+<!--&lt;!&ndash;      FORMS-->
 
+
+
+      <record id="rdv_form_id" model="ir.ui.view">
+            <field name="name">clinique rdv</field>
+            <field name="model">clinique.rdv</field>
+            <field name="arch" type="xml">
+                <form string="RDV">
+                    <header>
+                        <button type="object" name="patient_ready" string="Confirmer" states="draft" class="oe_highlight" />
+                        <field name="state" widget="statusbar" status_visible="draft,attendant,confirmation"/>
+                    </header>
+                    <group>
+                        <field name="patient" />
+                        <field name="docteur" />
+                        <field name="specialiste" />
+                        <field name="date" />
+                    </group>
+                </form>
+            </field>
+      </record>
+
+      <record id="docteur_form_id" model="ir.ui.view">
+            <field name="name">clinique.docteur.form</field>
+            <field name="model">clinique.docteur</field>
+            <field name="arch" type="xml">
+                <form string="Formulaire du docteur">
+                            <group>
+                                <field name="name" />
+                                <field name="date_docteur"  />
+                                <field name="specialite" widget="many2many_tags"  />
+                                <field name="age" />
+                            </group>
+                </form>
+            </field>
+      </record>
 <!--      <record id="docteur_form_id" model="ir.ui.view">-->
 <!--            <field name="name">clinique.docteur.form</field>-->
 <!--            <field name="model">clinique.docteur</field>-->
