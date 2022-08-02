@@ -7,6 +7,9 @@
 
     <menuitem name="Clinique" id="clinique" />
 
+    <menuitem name="Affiche RDVs" id="affiche_rdvs" parent="clinique"
+                  action="clinique_rdvs_affiche_form_action" sequence="4"/>
+
 
       <menuitem name="Rendez Vous" id="rdv" parent="clinique"
               action="clinique.action_rdv" sequence="3"/>

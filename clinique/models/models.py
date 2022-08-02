@@ -3,6 +3,10 @@
 from odoo import models, fields, api
 from datetime import date
 
+
+
+
+
 class Specialites(models.Model):
     _name = 'clinique.specialites'
     _description = 'Les spécialités des docteurs'
