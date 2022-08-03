@@ -7,6 +7,8 @@
                 <form string="Doc">
                     <group class="oe_title">
                         <field name="docteur_id"/>
+
+                        <field name="date"/>
                     </group>
                     <footer>
                         <button name="action_print_rdvs" string="Submit" type="object" class="btn-primary"/>

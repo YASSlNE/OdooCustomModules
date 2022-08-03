@@ -7,11 +7,9 @@ class AfficheRdvs(models.TransientModel):
     _name = 'clinique.rdvs.affiche'
     _description = 'Affichage des rendez vous sous forme pdf'
     docteur_id = fields.Many2one('clinique.docteur')
-    _inherit = 'clinique.rdv'
+    date = fields.Date('Date', default=fields.Datetime.now)
     def action_print_rdvs(self):
-        # print(docteur_id)
-        data = self.env['clinique.rdv'].search([('docteur', '=', 'self.docteur_id')])
+        data = self.env['clinique.rdv'].search(['&', '&', ('docteur', '=', self.docteur_id.id), ('state', '=', 'confirmation'), ('date', '=', self.date)])
         for d in data:
-            print(d['date'])
-            print('mlsqdkjfqsdmlkfjqs')
+            print(d.patient.name)
         return None
