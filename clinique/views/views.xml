@@ -145,7 +145,7 @@
                 <field name="patient"/>
                 <field name="date"/>
                 <field name="state" />
-
+                <field name="sequence" />
         <templates>
             <t t-name="kanban-box">
                 <div class="oe_kanban_card bg-danger border border-dark rounded oe_kanban_global_click d-flex flex-column shadow">
@@ -158,6 +158,7 @@
                         <h2 style = "color: grey" attrs="{'invisible': ['|', ('state','=','attendant'), ('state','=','confirmation')]}"><field name="state"/></h2>
                         <h2 style = "color: yellow" attrs="{'invisible': ['|', ('state','=','draft'), ('state','=','confirmation')]}"><field name="state"/></h2>
                         <h2 style = "color: green" attrs="{'invisible': ['|', ('state','=','draft'), ('state','=','attendant')]}"><field name="state"/></h2>
+                        <h2><li><field name="sequence" /></li></h2>
                         <h3><a attrs="{'invisible': ['|', ('state','=','draft'), ('state','=','confirmation')]}" href="#" type="object" name="docteur_ready" string="Confirmer" class="oe_highlight btn btn-success">Confirmer</a></h3>
 
                     </ul>
@@ -192,6 +193,7 @@
                         <field name="docteur" />
                         <field name="specialiste" />
                         <field name="date" />
+                        <field name="sequence" />
                     </group>
                 </form>
             </field>

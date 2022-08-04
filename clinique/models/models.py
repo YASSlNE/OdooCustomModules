@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from datetime import date
-
 
 
 
@@ -75,7 +74,9 @@ class RDV(models.Model):
 
     date = fields.Date('Date du rendez vous', default=fields.Datetime.now)
     # specialite_patient = fields.Char(related='docteur.specialite', default="sdmlkfjsqdmfklj")
-
+    sequence = fields.Char(string="Sequence", readonly=True,
+                           required = True, copy = False, index = True,
+                           default=lambda self: _('New'))
     state = fields.Selection([
         ('draft', 'Draft'),
         ('attendant', 'Attendant la confirmation du Docteur'),
@@ -85,3 +86,9 @@ class RDV(models.Model):
         self.state='attendant'
     def docteur_ready(self):
         self.state='confirmation'
+    @api.model
+    def create(self, vals):
+        if vals.get('sequence', 'New') == 'New':
+            vals['sequence']= self.env['ir.sequence'].next_by_code('self.rdv') or 'New'
+        result= super().create(vals)
+        return result

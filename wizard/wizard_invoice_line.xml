@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="Wizard_report_invoice" model="ir.ui.view">
+            <field name="name">les ligne de factures</field>
+            <field name="model">wizard.report.invoices.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="date_from" style="width: 50%%"/>
+                        <field name="date_to" style="width: 50%%"/>
+                        <field name="partner_type" style="width: 50%%"/>
+                    </group>
+
+                    <footer>
+                        <button type="object" name="print_report" string="Create report" class="oe_highlight"/>
+                        <button type="object" name="annuler" string="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="wizard_action_report_facturation_line"
+                    name="تقرير الفواتير لكل مركز "
+                    src_model="wizard.report.invoices.line"
+                    res_model="wizard.report.invoices.line"
+                    view_mode="form"
+                    target="new"/>
+
+<!--        <menuitem id="menu_invoice_id"  parent="rahila_reporting.menu_reports" name="تقرير الفواتير لكل مركز " action="wizard_action_report_facturation_line"/>-->
+    </data>
+</odoo>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="report.paperformat" id="paperformat_invoices_line_template">
+        <field name="name">paperformat.line.tempalte.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">10</field>
+        <field name="dpi">90</field>
+
+    </record>
+    <report
+            id="action_report_invoices_line"
+            model="wizard.report.invoices.line"
+            string="تقرير الفواتير لكل مركز "
+            report_type="qweb-pdf"
+            name="rahila_reporting.reporting_invoice_line"
+            file="rahila_reporting.reporting_invoice_line"
+            paperformat="paperformat_invoices_line_template"
+    />
+
+    <template id="reporting_invoice_line">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <h1 style="    color: white;">test,test</h1>
+                <h2  style="    color: white;">test test</h2>
+
+                <table class="table table-condensed table-bordered" style="border-collapse: collapse;border-style:hidden;">
+                    <thead>
+                        <tr>
+                            <img style="margin-right: 70%;margin-top: -15%;widht:80px;height:80px" src="/rahila_reporting/static/src/img/rahila.png"/>
+                            <div style="margin-top: -14%;">
+                                <br/>
+                                <br/>
+                                <p style="text-align: right; padding-left:3%; margin-top:5;;font:22px KacstArt !important">شركة الراحلة للخدمات
+                                    النفطية
+                                </p>
+
+                            </div>
+                            <div t-attf-style=" border: 1px !important; border-color: #138f45 !important; border-style: groove !important; "/>
+
+                        </tr>
+                    </thead>
+                </table>
+                <t t-foreach="docs" t-as="o">
+                    <div style="text-align: center"><span style="margin-bottom: 6%;font:30px KacstArt !important ">تقرير الفواتير لكل مركز خدمة للمحطات بالقيمة و الكميات  </span>
+                        <br></br>
+                        <span style="font:30px KacstArt !important " > من</span> <span t-esc="o['date_from']" style="font:27px Times New Roman !important "></span>
+                        <span style="font:30px KacstArt !important  " >الى</span> <span  t-esc="o['date_to']" style="font:27px Times New Roman !important "></span>
+                    </div>
+                </t>
+
+                <table class="table table-condensed table-bordered" style="border-collapse: collapse;border-style:hidden; border: 1px solid black;width : 100%;" >
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">رقم الاصال المالي </th>
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">تاريخ الاصدار </th>
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">إجمالي الفاتورة </th>
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">قمة النقل </th>
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">ضريبة النهر </th>
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">إجمالي القيمة </th>
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">الكمية </th>
+
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">المنتوج </th>
+
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">رقم المحطة </th>
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">إسم المستودع </th>
+
+<!--                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">رقم المستودع </th>-->
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">رقم الحساب </th>
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey"> إسم الزبون </th>
+                            <th style="border-bottom-width: 2px;border: 1px solid black;font: 14px KacstOne;background: lightgrey">رقم الفاتورة  </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr t-foreach="data2" t-as="d" style="text-align: center; border: 1px solid black;border-bottom-width: 2px;">
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-esc="d['payment_ref']"/>
+
+
+                            </td>
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-esc="d['date_invoice']"/>
+                            </td>
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-esc="'%2.f'%d['amount_total']"/>
+                            </td>
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-if ="d['private_transport'] == True" t-esc="d['private_transport_fees']"/>
+                                <span t-if ="d['private_transport'] == False" t-esc="d['driver_allowance']"/>
+                            </td>
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span />
+                            </td>
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-esc="d['amount_untaxed']"/>
+                            </td>
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-esc="'%.f'%d['quantity']"/>
+                            </td>
+
+
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-esc="d['product_id']"/>
+                            </td>
+
+
+
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-esc="d['ref']" />
+                            </td>
+
+
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-esc="d['departure_warehouse']"/>
+                            </td>
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-esc="d['partner_account_1']"/>
+                            </td>
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-esc="d['partner_id']"/>
+                            </td>
+                            <td style="border-bottom-width: 2px;border: 1px solid black;">
+                                <span t-esc="d['number']"/>
+                            </td>
+
+
+
+
+
+                        </tr>
+
+                        <br/>
+
+
+                    </tbody>
+
+
+
+                </table>
+
+                <div class="footer o_background_footer">
+                    <div t-attf-style=" border: 1px !important; border-color: #138f45 !important; border-style: groove !important; "/>
+
+                    <div class="text-center">
+                        <span>
+                            صفحة:
+                        </span>
+                        <span class="page"/>
+                        من
+                        <span class="topage"/>
+
+                    </div>
+                </div>
+
+            </t>
+
+        </t>
+
+    </template>
+</odoo>

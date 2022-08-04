@@ -29,7 +29,10 @@
         'views/templates.xml',
         'wizard/Affiche_rdvs_views.xml',
         'report/report_patient.xml',
-        'report/report_patient_templates.xml'
+        'report/report_patient_templates.xml',
+        'report/report_rdvs.xml',
+        'data/sequence.xml',
+        'wizard/Affiche_rdvs_views_template.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
