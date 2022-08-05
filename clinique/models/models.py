@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-from datetime import date
+from datetime import date, datetime, timedelta
+from odoo.exceptions import UserError
 
 
 
@@ -72,7 +73,7 @@ class RDV(models.Model):
     specialiste = fields.Many2many(related="docteur.specialite", readonly=True, relation = "clinique.specialites")
     # company_currency = fields.Many2one(string='Currency', related='company_id.currency_id', readonly=True, relation="res.currency")
 
-    date = fields.Date('Date du rendez vous', default=fields.Datetime.now)
+    date = fields.Datetime('Date du rendez vous', default=fields.Datetime.now)
     # specialite_patient = fields.Char(related='docteur.specialite', default="sdmlkfjsqdmfklj")
     sequence = fields.Char(string="Sequence", readonly=True,
                            required = True, copy = False, index = True,
@@ -90,5 +91,12 @@ class RDV(models.Model):
     def create(self, vals):
         if vals.get('sequence', 'New') == 'New':
             vals['sequence']= self.env['ir.sequence'].next_by_code('self.rdv') or 'New'
+        doc_id = vals.get('docteur')
+        start_date = datetime.strptime(vals.get('date'), '%Y-%m-%d %H:%M:%S')
+
+        end_date = start_date-timedelta(hours=1)
+        print(self.env['clinique.rdv'].search(['&', '&', ('docteur', '=', doc_id), ('date','<=',end_date), ('date','>=',start_date)]))
+        # if(self.env['clinique.rdv'].search(('docteur', '=', doc_id), ('date','<=',end_date), ('date','>=',start_date))!=False):
+        #     raise UserError(_("Il y'a déjà un autre rendez-vous dans cette heure là"))
         result= super().create(vals)
         return result

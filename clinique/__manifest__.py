@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+
 {
     'name': "Clinique",
 
@@ -10,7 +12,7 @@
         Long description of module's purpose
     """,
 
-    'author': "My Company",
+    'author': "Clinique",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
@@ -22,9 +24,10 @@
     # any module necessary for this one to work correctly
     'depends': ['base', 'contacts'],
 
+    'category': 'Clinique',
+
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
         'wizard/Affiche_rdvs_views.xml',

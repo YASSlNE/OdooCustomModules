@@ -8,7 +8,7 @@
                     <group class="oe_title">
                         <field name="docteur_id"/>
 
-                        <field name="date"/>
+                        <field name="date" widget='date'/>
                     </group>
                     <footer>
                         <button name="action_print_rdvs" string="Submit" type="object" class="btn-primary"/>
@@ -19,7 +19,7 @@
         </record>
 
         <record id="clinique_rdvs_affiche_form_action" model="ir.actions.act_window">
-            <field name="name">Lost Reason</field>
+            <field name="name">Telecharger la liste des rendez vous</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">clinique.rdvs.affiche</field>
             <field name="view_mode">form</field>
