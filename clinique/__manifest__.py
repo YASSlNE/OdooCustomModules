@@ -38,6 +38,7 @@
         'wizard/Affiche_rdvs_views_template.xml',
         'security/groups.xml',
         'security/ir.model.access.csv',
+        'security/security_rules.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -70,6 +70,7 @@ class RDV(models.Model):
     _name = 'clinique.rdv'
     _description = 'Les rendez vous'
     patient = fields.Many2one('clinique.patient')
+    user = fields.Many2one('res.users', related="patient.user")
     docteur = fields.Many2one('clinique.docteur')
     specialiste = fields.Many2many(related="docteur.specialite", readonly=True, relation = "clinique.specialites")
     # company_currency = fields.Many2one(string='Currency', related='company_id.currency_id', readonly=True, relation="res.currency")
