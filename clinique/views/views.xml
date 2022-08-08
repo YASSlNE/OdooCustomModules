@@ -155,11 +155,12 @@
                         </strong></h1>
                         <h2><li><field name="patient"/></li></h2>
                         <h2><li><field name="date"/></li></h2>
-                        <h2 style = "color: grey" attrs="{'invisible': ['|', ('state','=','attendant'), ('state','=','confirmation')]}"><field name="state"/></h2>
-                        <h2 style = "color: yellow" attrs="{'invisible': ['|', ('state','=','draft'), ('state','=','confirmation')]}"><field name="state"/></h2>
-                        <h2 style = "color: green" attrs="{'invisible': ['|', ('state','=','draft'), ('state','=','attendant')]}"><field name="state"/></h2>
+                        <h2 style = "color: grey" attrs="{'invisible': ['|', '|', ('state','=','annule'), ('state','=','attendant'), ('state','=','confirmation')]}"><field name="state"/></h2>
+                        <h2 style = "color: yellow" attrs="{'invisible': ['|', '|', ('state','=','annule'), ('state','=','draft'), ('state','=','confirmation')]}"><field name="state"/></h2>
+                        <h2 style = "color: green" attrs="{'invisible': ['|', '|', ('state','=','annule'), ('state','=','draft'), ('state','=','attendant')]}"><field name="state"/></h2>
+                        <h2 style = "color: black" attrs="{'invisible': ['|', '|', ('state','=','draft'), ('state','=','confirmation'), ('state','=','attendant')]}"><field name="state"/></h2>
                         <h2><li><field name="sequence" /></li></h2>
-                        <h3><a attrs="{'invisible': ['|', ('state','=','draft'), ('state','=','confirmation')]}" href="#" type="object" name="docteur_ready" string="Confirmer" class="oe_highlight btn btn-success">Confirmer</a></h3>
+                        <h3><a attrs="{'invisible': ['|', '|', ('state','=','annule'), ('state','=','draft'), ('state','=','confirmation')]}" href="#" type="object" name="docteur_ready" string="Confirmer" class="oe_highlight btn btn-success">Confirmer</a></h3>
 
                     </ul>
                  </div>
@@ -186,13 +187,16 @@
                 <form string="RDV">
                     <header>
                         <button type="object" name="patient_ready" string="Confirmer" states="draft" class="oe_highlight" />
-                        <field name="state" widget="statusbar" status_visible="draft,attendant,confirmation"/>
+                        <button type="object" name="patient_cancel" string="Annuler" states="draft,attendant,confirmation" class="btn btn-danger" />
+                        <field name="state" widget="statusbar" status_visible="draft,attendant,confirmation,annule"/>
+<!--                        <field name="state" widget="statusbar" status_visible="annule"/>-->
+
                     </header>
                     <group>
-                        <field name="patient" />
-                        <field name="docteur" />
-                        <field name="specialiste" />
-                        <field name="date" />
+                        <field name="patient" attrs="{'readonly': ['|', '|', ('state', '=', 'attendant'), ('state', '=', 'confirmation'), ('state', '=', 'annule')]}"/>
+                        <field name="docteur" attrs="{'readonly': ['|', '|', ('state', '=', 'attendant'), ('state', '=', 'confirmation'), ('state', '=', 'annule')]}"/>
+                        <field name="specialiste" attrs="{'readonly': ['|', '|', ('state', '=', 'attendant'), ('state', '=', 'confirmation'), ('state', '=', 'annule')]}"/>
+                        <field name="date"/>
                         <field name="sequence" />
                     </group>
                 </form>

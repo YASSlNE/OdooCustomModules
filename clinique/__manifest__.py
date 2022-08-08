@@ -36,6 +36,8 @@
         'report/report_rdvs.xml',
         'data/sequence.xml',
         'wizard/Affiche_rdvs_views_template.xml',
+        'security/groups.xml',
+        'security/ir.model.access.csv',
     ],
     # only loaded in demonstration mode
     'demo': [
