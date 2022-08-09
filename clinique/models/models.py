@@ -95,11 +95,12 @@ class RDV(models.Model):
         self.state='annule'
     @api.model
     def create(self, vals):
+        print(dir(self.env.user))
         if vals.get('sequence', 'New') == 'New':
             vals['sequence']= self.env['ir.sequence'].next_by_code('self.rdv') or 'New'
         doc_id = vals.get('docteur')
         date_wanted = datetime.strptime(vals.get('date'), '%Y-%m-%d %H:%M:%S')
-        start_date= date_wanted-timedelta(hours=1)
+        start_date = date_wanted-timedelta(hours=1)
         end_date = date_wanted+timedelta(hours=1)
         print(start_date)
         print(end_date)
@@ -120,6 +121,29 @@ class RDV(models.Model):
             if (self.env['clinique.rdv'].search(
                 [('state', '!=', 'annule'), ('id', '!=', self.id), ('docteur', '=', self.doc_id), ('date', '<=', end_date), ('date', '>=', start_date)])):
                 raise UserError(_("Il y'a déjà un autre rendez-vous dans cette heure là"))
-        print(vals)
+        # print(len(self.env['clinique.rdv'].search([])))
         result = super(RDV, self).write(vals)
         return result
+
+    def _check_draft_rdvs(self):
+        k = datetime.now()
+        print(k)
+        if(k.hour==14 and k.minute==47):
+            print("qsmlkdjfsqmldkfjqsmdlfkj")
+            number_of_records = len(self.env['clinique.rdv'].search([]))
+            for i in range(number_of_records):
+                self.env['clinique.rdv'].search([])[i]['state'] = 'annule'
+            print("done")
+# class SwitchToCanceled(models.Model):
+#     _name = 'cron.cancel'
+#     k=1
+#     # def _method(self):
+#     #     if(self.k!=5):
+#     #         self.k+=1
+#     #         print(self.k)
+#     #     else:
+#     #         print(self.k)
+#     #         print("inside")
+#
+#
+#             self.env['clinique.rdv'].search([])
