@@ -2,3 +2,9 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_clinique_clinique,clinique.clinique,clinique.clinique,base.group_user,1,1,1,1
 access_clinique_patient,clinique.patient,model_clinique_patient,group_patient,1,0,0,0
 access_clinique_patient_rdv,clinique.rdv,model_clinique_rdv,group_patient,1,0,1,0
+access_clinique_patient_clinique,clinique.docteur,model_clinique_docteur,group_patient,1,0,0,0
+access_clinique_patient_specialites,clinique.specialites,model_clinique_specialites,group_patient,1,0,0,0
+access_clinique_docteur,clinique.docteur,model_clinique_docteur,group_docteur,1,1,1,1
+access_clinique_docteur_patient,clinique.patient,model_clinique_patient,group_docteur,1,1,1,1
+access_clinique_docteur_rdv,clinique.rdv,model_clinique_rdv,group_docteur,1,1,1,1
+access_clinique_docteur_specialites,clinique.specialites,model_clinique_specialites,group_docteur,1,1,1,1

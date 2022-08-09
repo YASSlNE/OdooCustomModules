@@ -7,6 +7,6 @@
 
 
     <record id="group_docteur" model="res.groups">
-   <field name="name">Les Docteurs</field>
-  </record>
+       <field name="name">Les Docteurs</field>
+      </record>
 </odoo>

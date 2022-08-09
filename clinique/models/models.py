@@ -16,6 +16,7 @@ class Specialites(models.Model):
 class Docteur(models.Model):
     _name = 'clinique.docteur'
     _description = 'Modele du docteur'
+    user = fields.Many2one('res.users')
     name = fields.Char()
     date_docteur = fields.Date('Date de naissance', default=fields.Datetime.now)
     specialite = fields.Many2many('clinique.specialites')

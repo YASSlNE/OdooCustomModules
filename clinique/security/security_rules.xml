@@ -12,7 +12,27 @@
             <field ref="model_clinique_rdv" name="model_id"/>
             <field name="domain_force">[('user','=',user.id)]</field>
             <field name="groups" eval="[(4, ref('group_patient'))]"/>
-        </record
+        </record>
+
+
+        <record id="rule_clinique_docteur" model="ir.rule">
+            <field name="name">Docs</field>
+            <field ref="model_clinique_docteur" name="model_id"/>
+            <field name="domain_force">[('user','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_docteur'))]"/>
+        </record>
+
+
+        <record id="rule_clinique_docteur_rdvs" model="ir.rule">
+            <field name="name">Docs</field>
+            <field ref="model_clinique_rdv" name="model_id"/>
+            <field name="domain_force">[('docteur.user.id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_docteur'))]"/>
+        </record>
+
+
+
+
     </data>
 
 </odoo>

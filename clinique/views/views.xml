@@ -16,11 +16,11 @@
 
 
     <menuitem name="Patients" id="patients" parent="clinique"
-              action="clinique.action_patients" sequence="2"/>
+              action="clinique.action_patients" sequence="2" groups="group_patient,base.group_user"/>
 
 
     <menuitem name="Docteurs" id="docteurs" parent="clinique"
-              action="clinique.action_docteur" sequence="1"/>
+              action="clinique.action_docteur" sequence="1" groups="group_docteur,base.group_user"/>
 
 
 
@@ -209,6 +209,8 @@
             <field name="arch" type="xml">
                 <form string="Formulaire du docteur">
                             <group>
+
+                                <field name="user"  />
                                 <field name="name" />
                                 <field name="date_docteur"  />
                                 <field name="specialite" widget="many2many_tags"  />
