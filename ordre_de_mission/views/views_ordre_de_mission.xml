@@ -1,0 +1,50 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="ordre_de_mission.form">
+      <field name="name">Formulaire Ordre de mission</field>
+      <field name="model">ordre.mission</field>
+      <field name="arch" type="xml">
+        <form string="Créer">
+                    <header>
+<!--                        <button type="object" name="patient_ready" string="Confirmer" states="draft" class="oe_highlight" />-->
+<!--                        <button type="object" name="patient_cancel" string="Annuler" states="draft,attendant,confirmation" class="btn btn-danger" />-->
+                        <field name="state" widget="statusbar" statusbar_visible="draft"/>
+                    </header>
+                    <group>
+                        <field name="employee_id" string="l'Employé"/>
+                        <field name="heureDebut" string="Heure de debut de la mission"/>
+                        <field name="heureFin" string="Heure de fin de la mission"/>
+                        <field name="lieuCreate" string="Lieu de la mission"/>
+
+                        <field name="description" string="Objet de mission"/>
+                        <field name="intervalAut" string="Durée de la mission"/>
+                        <field name="transport" string="Moyen de transport"/>
+
+                        <field name="autre_moyen" string="Autre" attrs="{'invisible': [('transport', '!=', 'Autre')]}"/>
+                    </group>
+                </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="ordre_de_mission.action_window">
+      <field name="name">Ordre de mission</field>
+      <field name="res_model">ordre.mission</field>
+      <field name="view_mode">tree,kanban,form</field>
+    </record>
+
+
+
+
+    <!-- Top menu item -->
+    <menuitem name="Ordre de mission" id="ordre_de_mission.menu_root"/>
+    <!-- menu categories -->
+    <menuitem name="Ordre de mission" id="ordre_de_mission.menu_sub" parent="ordre_de_mission.menu_root"
+    action="ordre_de_mission.action_window"/>
+
+  </data>
+</odoo>

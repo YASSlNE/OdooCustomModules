@@ -28,7 +28,7 @@
 
     # always loaded
     'data': [
-        'views/views.xml',
+        'views/views_ordre_de_mission.xml',
         'views/templates.xml',
         'wizard/Affiche_rdvs_views.xml',
         'report/report_patient.xml',
