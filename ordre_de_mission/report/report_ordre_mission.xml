@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<report
+    id="hr_employee_buttom_ordre_mission_qweb"
+    model="ordre.mission"
+    string="Report Ordre Mission"
+    report_type="qweb-html"
+    name="ordre_de_mission.report_ordre_mission"
+    file="ordre_de_mission.report_ordre_mission"
+
+/>
+
+</odoo>
+

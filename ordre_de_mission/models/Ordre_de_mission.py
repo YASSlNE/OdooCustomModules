@@ -75,7 +75,7 @@ class ordre_mission(models.Model):
             self.intervalAut = str(interval)
 
     # N°000 / 2022 for example
-    name = fields.Char(string="Reference", default="/fsdlkghsdflkghsdlkfjh0", readonly=True)
+    name = fields.Char(string="Reference", default="/", readonly=True)
     dateCreate = fields.Date(default=fields.Date.today, string="Creation Date", readonly=True)
     # lieuCreate = fields.Selection([('Ssssejnene', 'Tunsssis'), ('Ssssejnene', 'Ssssfax'), ('Ssssejnene', 'Ssssejnene'), ], default='Tunis')
     lieuCreate = fields.Many2one('lieu.mission')
@@ -97,12 +97,12 @@ class ordre_mission(models.Model):
 
     # , 'envoyer':[('readonly', False)]}
 
-    # destination = fields.Char(string = "Destination", required=True, readonly=True, states={'draft':[('readonly',False)]})
+    destination = fields.Char(string = "Destination", required=True, readonly=True, states={'draft':[('readonly',False)]})
 
-    # destination_state_id = fields.Many2one("res.country.state", required=True, readonly=True,
-    #                                        states={'draft': [('readonly', False)], 'modifier': [('readonly', False)]})
-    # destination_country_id = fields.Many2one('res.country', required=True, readonly=True,
-    #                                          states={'draft': [('readonly', False)], 'modifier': [('readonly', False)]})
+    destination_state_id = fields.Many2one("res.country.state", required=True, readonly=True,
+                                           states={'draft': [('readonly', False)], 'modifier': [('readonly', False)]})
+    destination_country_id = fields.Many2one('res.country', required=True, readonly=True,
+                                             states={'draft': [('readonly', False)], 'modifier': [('readonly', False)]})
 
     description = fields.Text(string="Description", required=True, readonly=True,
                               states={'draft': [('readonly', False)]})
@@ -150,9 +150,9 @@ class ordre_mission(models.Model):
         # self.state = 'envoyer'
         duree = timedelta(hours=0)
         print(duree)
-        heure_Debut = datetime.strptime(self.heureDebut, "%Y-%m-%d %H:%M:%S")
+        heure_Debut = datetime.strptime(str(self.heureDebut), "%Y-%m-%d %H:%M:%S")
         print(heure_Debut)
-        heure_Fin = datetime.strptime(self.heureFin, "%Y-%m-%d %H:%M:%S")
+        heure_Fin = datetime.strptime(str(self.heureFin), "%Y-%m-%d %H:%M:%S")
         print(heure_Fin)
         interval = heure_Fin - heure_Debut
         print(interval)
@@ -172,7 +172,6 @@ class ordre_mission(models.Model):
                     'reply_to': self.env['res.users'].sudo().browse().name,
                     'author_id': self.env['res.users'].sudo().browse().partner_id.id,
                     'model': 'ordre.mission',
-                    'type': 'comment',
                     'email_from': self.env['res.users'].sudo().browse().name,
                     'starred': True,
                 }
@@ -184,7 +183,7 @@ class ordre_mission(models.Model):
 
                     'mail_message_id': message.id,
                     'is_read': False,
-                    'starred': True,
+                    # 'starred': True,
 
                 }
                 self.env['mail.notification'].sudo().create(mail_notif_vals)
@@ -218,7 +217,6 @@ class ordre_mission(models.Model):
                 'reply_to': self.env['res.users'].sudo().browse().name,
                 'author_id': self.env['res.users'].sudo().browse().partner_id.id,
                 'model': 'ordre.mission',
-                'type': 'comment',
                 'email_from': self.env['res.users'].sudo().browse().name,
                 'starred': True,
             }
@@ -237,7 +235,7 @@ class ordre_mission(models.Model):
 
                 'mail_message_id': message.id,
                 'is_read': False,
-                'starred': True,
+                # 'starred': True,
             }
 
             print(mail_notif_emp_vals, "mail_notif_emp_vals")
@@ -267,7 +265,6 @@ class ordre_mission(models.Model):
                 'reply_to': self.env['res.users'].browse().name,
                 'author_id': self.env['res.users'].browse().partner_id.id,
                 'model': 'ordre.mission',
-                'type': 'comment',
                 'email_from': self.env['res.users'].browse().name,
                 'starred': True,
             }
@@ -280,7 +277,7 @@ class ordre_mission(models.Model):
 
                 'mail_message_id': message.id,
                 'is_read': False,
-                'starred': True,
+                # 'starred': True,
             }
             self.env['mail.notification'].create(mail_notif_dep_vals)
 
@@ -289,7 +286,7 @@ class ordre_mission(models.Model):
                 'res_partner_id': self.env['res.users'].browse(confirm.employee_id.user_id.id).partner_id.id,
                 'mail_message_id': message.id,
                 'is_read': False,
-                'starred': True,
+                # 'starred': True,
             }
             self.env['mail.notification'].create(mail_notif_emp_vals)
         self.state = 'confirmerA'
@@ -312,7 +309,6 @@ class ordre_mission(models.Model):
                 'reply_to': self.env['res.users'].browse().name,
                 'author_id': self.env['res.users'].browse().partner_id.id,
                 'model': 'ordre.mission',
-                'type': 'comment',
                 'email_from': self.env['res.users'].browse().name,
                 'starred': True,
             }
@@ -324,7 +320,7 @@ class ordre_mission(models.Model):
                 # 'partner_id': self.env['res.users'].browse(valid.employee_id.user_id.id).partner_id.id,
                 'mail_message_id': message.id,
                 'is_read': False,
-                'starred': True,
+                # 'starred': True,
             }
             self.env['mail.notification'].create(mail_notif_emp_vals)
         self.state = 'confirmerV'
@@ -350,7 +346,6 @@ class ordre_mission(models.Model):
                 'reply_to': self.env['res.users'].sudo().browse().name,
                 'author_id': self.env['res.users'].sudo().browse().partner_id.id,
                 'model': 'ordre.mission',
-                'type': 'comment',
                 'email_from': self.env['res.users'].sudo().browse().name,
                 'starred': True,
             }
@@ -364,7 +359,7 @@ class ordre_mission(models.Model):
 
                 'mail_message_id': message.id,
                 'is_read': False,
-                'starred': True,
+                # 'starred': True,
             }
             self.env['mail.notification'].sudo().create(mail_notif_emp_vals)
         # self.state = 'refuser'
@@ -380,6 +375,11 @@ class ordre_mission(models.Model):
             print("date_x*********************", date_x)
             self.date_aut_aff = datetime.strftime(date_x, "%Y-%m-%d")
             print("self.date_aut_aff*********************", self.date_aut_aff)
+
+    def reset_sequence(self):
+        sequences = self.env['ir.sequence'].search([('name', '=like', 'Ordre Mission')])
+        sequences.write({'number_next': 1})
+        return None
 
     @api.model
     def create(self, values):
@@ -412,7 +412,9 @@ class ordre_mission(models.Model):
             # values['name'] = self.env['ir.sequence'].next_by_id(seq_miss_company.id)
             # contract_id = super(hr_contract, self).create( vals)
             values['name'] = self.env['ir.sequence'].get('ord.miss.ref') or ' '
+            print(values['name'])
             res = super(ordre_mission, self).create(values)
             return res
         else:
             raise exceptions.ValidationError("Il faut selectioner la durée de la mission")
+

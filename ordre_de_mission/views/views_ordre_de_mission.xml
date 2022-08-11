@@ -1,50 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <data>
-    <!-- explicit list view definition -->
-
-    <record model="ir.ui.view" id="ordre_de_mission.form">
-      <field name="name">Formulaire Ordre de mission</field>
-      <field name="model">ordre.mission</field>
-      <field name="arch" type="xml">
-        <form string="Créer">
-                    <header>
-<!--                        <button type="object" name="patient_ready" string="Confirmer" states="draft" class="oe_highlight" />-->
-<!--                        <button type="object" name="patient_cancel" string="Annuler" states="draft,attendant,confirmation" class="btn btn-danger" />-->
-                        <field name="state" widget="statusbar" statusbar_visible="draft"/>
-                    </header>
-                    <group>
-                        <field name="employee_id" string="l'Employé"/>
-                        <field name="heureDebut" string="Heure de debut de la mission"/>
-                        <field name="heureFin" string="Heure de fin de la mission"/>
-                        <field name="lieuCreate" string="Lieu de la mission"/>
-
-                        <field name="description" string="Objet de mission"/>
-                        <field name="intervalAut" string="Durée de la mission"/>
-                        <field name="transport" string="Moyen de transport"/>
-
-                        <field name="autre_moyen" string="Autre" attrs="{'invisible': [('transport', '!=', 'Autre')]}"/>
-                    </group>
-                </form>
-      </field>
-    </record>
+    <data>
 
 
-    <!-- actions opening views on models -->
 
-    <record model="ir.actions.act_window" id="ordre_de_mission.action_window">
-      <field name="name">Ordre de mission</field>
-      <field name="res_model">ordre.mission</field>
-      <field name="view_mode">tree,kanban,form</field>
-    </record>
+		<!--Ordre Mission calender-->
+		<record id="view_ordre_mission_calendar" model="ir.ui.view">
+		    <field name="name">ordre.mission.calendar</field>
+		    <field name="model">ordre.mission</field>
+		    <field name="arch" type="xml">
+		        <calendar string="Application Order Mission" color="employee_id"
+		                  date_start="heureDebut" date_stop="heureFin" quick_add="False">
+		            <field name="employee_id"/>
+		        </calendar>
+		    </field>
+		</record>
+
+		<!--Ordre Mission Tree-->
+		<record id="view_ordre_mission_tree" model="ir.ui.view">
+			<field name="name">ordre.mission.tree</field>
+			<field name="model">ordre.mission</field>
+			<field name="arch" type="xml">
+				<tree string="Order Mission">
+					<field name="employee_id" string="Name and last name" />
+					<field name="heureDebut" string="Beginning hour"/>
+					<!--field name="date_aut_aff"/-->
+					<field name="intervalAut" string="Number of hours"/>
+					<field name="description"/>
+					<field name="state" string="State"/>
+				</tree>
+			</field>
+		</record>
 
 
 
 
-    <!-- Top menu item -->
-    <menuitem name="Ordre de mission" id="ordre_de_mission.menu_root"/>
-    <!-- menu categories -->
-    <menuitem name="Ordre de mission" id="ordre_de_mission.menu_sub" parent="ordre_de_mission.menu_root"
-    action="ordre_de_mission.action_window"/>
+		<!--Ordre Mission Form-->
+		<record id="view_ordre_mission_form" model="ir.ui.view">
+			<field name="name">ordre.mission.form</field>
+			<field name="model">ordre.mission</field>
+			<field name="arch" type="xml">
+				<form string="Ordre Mission">
+					<header>
+						<button name="s_envoyer" type="object" string="To send" states="draft,modifier" class="oe_highlight" />
+						<button name="s_annuler" type="object" string="Cancel" states="envoyer" class="oe_highlight"/>
 
-  </data>
+						<!--<button name="s_modifier" type="object" string="Modifier" states="envoyer" class="oe_highlight"/>-->
+
+						<button name="s_retour1" type="object" string="à modifier" states="envoyer" class="oe_highlight" />
+						<button name="s_retour2" type="object" string="à modifier" states="confirmerA" class="oe_highlight" />
+
+
+
+
+
+
+						<button name="s_confirmer_A" type="object" string="Approve" states="envoyer" class="oe_highlight" />
+						<button name="s_confirmer_V" type="object" string="Second approval" states="confirmerA" class="oe_highlight" />
+						<button name="s_imprimer" type="object" string="To print" attrs="{'invisible':[('state','not in',['confirmerV'])]}" class="oe_highlight" />
+						<button name="s_archiver" type="object" string="To attach" states="imprimer" class="oe_highlight" />
+						<button name="s_refuser" type="object" string="Refuse" states="confirmerA,envoyer,s_confirmer_V" class="oe_highlight"  />
+						<field name="state" widget="statusbar"  statusbar_visible="draft" />
+												<!--<field name="state" widget="statusbar"  statusbar_visible="confirmerA,modifier" groups="si_ordre_mission.group_chef_equipe"/>-->
+
+					</header>
+
+
+
+
+
+
+
+					<sheet>
+						<notebook>
+							<page string="Request">
+						<group>
+					            <group>
+							<field name="name" string="Reference"/>
+						     </group>
+						     <group>
+							<div>
+							<b> In </b>
+							<field name="lieuCreate" class="oe_inline"/>
+							<b> the: </b>
+							<field name="dateCreate" class="oe_inline"/></div>
+						     </group>
+						</group>
+
+						<group col="10">
+
+
+
+							<group colspan= "5"><field name="employee_id" string="Name and last name"/></group>
+
+						</group>
+
+						<group>
+							<label for="heureDebut" string="Date of issue" align="right"/>
+							<div>
+							<b> From: </b>
+							<field name="heureDebut" class="oe_inline"/>
+							<b> -To- </b>
+							<field name="heureFin" class="oe_inline"/></div>
+						</group>
+
+						<group><field name="intervalAut" string="Number of hours"/></group>
+							<!--<group>-->
+
+
+
+
+						<group>
+							<label for="destination_state_id" string="Destination" align="right"/>
+							<div class="o_address_format">
+
+							<field name="destination_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}' style="width:50%%"/>
+							<field name="destination_state_id"  placeholder="State" class="o_address_state" options='{"no_open": True}' style="width:50%%"/>
+							</div>
+						</group>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							<!---->
+							<!---->
+							<!---->
+							<!--<field name="destination_state_id" placeholder="Ajouter votre région..."/>-->
+							<!--<field name="destination_country_id" placeholder="Ajouter votre pays..."/>-->
+<group>							<field name="description" placeholder="Add your description..." style="width:50%%"/>
+</group>
+                                                <group>
+							<group>
+								<field name="transport" widget="radio"/>
+							</group>
+							<group>
+								<field name="matriculeVoit" attrs="{'invisible':[('transport','!=','Vehicule Personel')],'required':[('transport','=','Vehicule Personel')]}" />
+								<field name="precision" attrs="{'invisible':[('transport','!=','Autre')],'required':[('transport','=','Autre')]}"/>
+							</group>
+						</group> </page>
+							<page string= "Notes">
+								<group>
+									<field name="visibility_note_chef" invisible="1"/>
+									<field name="visibility_note_resp" invisible="1"/>
+									<field name="visibility_button_modifier"  invisible="1"/>
+									<group>
+										<field name="required_note_chef" invisible="1"/>
+										<!---->
+									<field name="note_chef" placeholder="Add your notes..."  string="Team Leader Note" attrs="{'required':[('required_note_chef','=',True),('state','=','envoyer')]}"/>
+										<!--groups="si_ordre_mission.group_chef_equipe"-->
+									<field name="note_responsable" placeholder="Add your notes..."  string="Responsible Note" />
+										<!--groups="si_ordre_mission.group_responsable_ordre_mission"-->
+									</group>
+
+								</group>
+							</page>
+						</notebook>
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+
+
+		<record id="view_ordre_mission_filter" model="ir.ui.view">
+		    <field name="name">ordre.mission.filter</field>
+		    <field name="model">ordre.mission</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Mission Order">
+		            <field name="name" string="Reference"/>
+		            <separator/>
+		            <filter name="en_creation" domain="[('state','=','draft')]" string="En création"/>
+		            <filter name="en_attente_validation_1" domain="[('state','=','envoyer')]" string="En attente validation1"/>
+		            <filter name="en_attente_validation_2" domain="[('state','=','confirmerA')]" string="En attente validation2"/>
+					<filter name="en_attente_impression" domain="[('state','=','confirmerV')]" string="En attente d'impression"/>
+					<filter name="en_attente_de_signature" domain="[('state','=','imprimer')]" string="En attente de signature"/>
+					<filter name="archiver" domain="[('state','=','archiver')]" string="Archiver"/>
+		            <separator/>
+		            <filter name="annee" string="Year"
+		                domain="['|','&amp;',('heureFin', '&lt;=', time.strftime('%%Y-12-31')),
+		                                     ('heureFin', '&gt;=', time.strftime('%%Y-01-01')),
+		                             '&amp;',('heureDebut', '&lt;=', time.strftime('%%Y-12-31')),
+		                                     ('heureDebut', '&gt;=', time.strftime('%%Y-01-01'))]"
+		                help="Current Year Leaves"/>
+		            <separator/>
+		            <filter string="My requests" name="mes_demandes" domain="[('user_id', '=', uid)]" help="My Leave Requests"/>
+		            <separator/>
+		            <filter string="The holidays of my department" name="my_department_leaves" domain="[('department_id.manager_id.user_id', '=', uid)]"/>
+		            <field name="employee_id"/>
+		            <field name="department_id"/>
+			    <field name="chef_id"/>
+		            <group expand="0" string="Group By">
+		                <filter name="group_employee" string="Employee" context="{'group_by':'employee_id'}"/>
+
+								                <filter name="group_chef_equipe" string="Team Leader" context="{'group_by':'chef_id'}"/>
+
+		                <separator/>
+		            </group>
+		        </search>
+		    </field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_ordre_mission_simple">
+		    <field name="name">ordre.mission.report_tree</field>
+		    <field name="model">ordre.mission</field>
+		    <field name="priority">20</field>
+		    <field name="arch" type="xml">
+				<tree decoration-danger="state=='refuser'" decoration-info="state=='draft'" decoration-bf="state in ('envoyer','confirmerA','confirmerV')" string="Leaves Summary">
+<!--		        <tree colors="red:state == 'refuser';blue:state == 'draft';black:state in ('envoyer','confirmerA','confirmerV')" string="Leaves Summary">-->
+		            <field name="employee_id"/>
+		            <field name="heureDebut"/>
+		            <field name="intervalAut"/>
+					<field name="destination_country_id"/>
+					<field name="destination_state_id"/>
+					<field name="description"/>
+		            <field name="state" string="State"/>
+					<field name="chef_id" invisible="1"/>
+					<field name="user_id" invisible="1"/>
+			    	<field name="department_id" invisible="1"/>
+		        </tree>
+		    </field>
+		</record>
+
+
+
+
+				<menuitem name="Order Mission"  id="menu_ordre_mission" sequence="4" />
+
+
+		<record id="action_creation_ordre_mission" model="ir.actions.act_window">
+			<field name="name">Application Order Mission</field>
+			<field name="res_model">ordre.mission</field>
+			<field name="view_mode">calendar,tree,form</field>
+		</record>
+
+		<record id="action_validation_ordre_mission" model="ir.actions.act_window">
+			<field name="name">Request Order Mission to validate</field>
+			<field name="res_model">ordre.mission</field>
+			<field name="view_mode">tree,form</field>
+	                <field name="domain">[('state','!=','draft')]</field>
+		</record>
+
+
+	       <record  id="action_resume_ordre_mission" model="ir.actions.act_window">
+		    <field name="name">Summary Ordre Mission</field>
+		    <field name="res_model">ordre.mission</field>
+<!--		    <field name="view_type">form</field>-->
+		    <field name="view_mode">tree,form</field>
+		    <field name="view_id" eval="view_ordre_mission_simple"/>
+		    <field name="context">{'search_default_group_employee': 1}</field>
+		    <field name="search_view_id" ref="view_ordre_mission_filter"/>
+		</record>
+
+		 <menuitem action="action_creation_ordre_mission" name="Application Order Mission" id="menu_action_view_demande_ordre_mission" parent="menu_ordre_mission" sequence="1" />
+
+
+
+		<menuitem action="action_validation_ordre_mission" name="Order Mission to validate" id="menu_action_view_validation_ordre_mission" parent="menu_ordre_mission" sequence="2"  />
+
+
+<!--groups="base.group_hr_user"-->
+
+
+		<menuitem action="action_resume_ordre_mission" name="Summary Order Mission" id="menu_action_view_summary_ordre_mission" parent="menu_ordre_mission" sequence="3" />
+	</data>
 </odoo>
