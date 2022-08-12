@@ -7,10 +7,16 @@ import calendar
 
 
 
+class LieuCree(models.Model):
+    _name = "lieu.cree"
+    _description = "Lieu dont la mission est crée"
+    name = fields.Char()
+
+
 class LieuDeMission(models.Model):
     _name = "lieu.mission"
     _description = "Le lieu de la mission"
-    name = fields.Char("Lieu de la mission")
+    name = fields.Char()
 
 
 class ordre_mission(models.Model):
@@ -78,7 +84,8 @@ class ordre_mission(models.Model):
     name = fields.Char(string="Reference", default="/", readonly=True)
     dateCreate = fields.Date(default=fields.Date.today, string="Creation Date", readonly=True)
     # lieuCreate = fields.Selection([('Ssssejnene', 'Tunsssis'), ('Ssssejnene', 'Ssssfax'), ('Ssssejnene', 'Ssssejnene'), ], default='Tunis')
-    lieuCreate = fields.Many2one('lieu.mission')
+    lieuCree = fields.Many2one('lieu.cree')
+    lieuDestination = fields.Many2one('lieu.mission', string="Destination")
     visibility_button_modifier = fields.Boolean(compute='_visibility_button_modifier', method=True)
     visibility_note_chef = fields.Boolean(compute='_visibility_note_chef', method=True)
     visibility_note_resp = fields.Boolean(compute='_visibility_note_resp', method=True)
@@ -90,7 +97,7 @@ class ordre_mission(models.Model):
                                           'refuser': [('readonly', True)],
                                           'annuler': [('readonly', True)]})  # ,readonly=True)
     # job = fields.Char(string='Titre du poste',related='employee_id.job_id', readonly=True)
-    heureDebut = fields.Datetime(required=True, readonly=True, states={'draft': [('readonly', False)], 'modifier': [
+    heureDebut = fields.Datetime(default=datetime.now(), required=True, readonly=True, states={'draft': [('readonly', False)], 'modifier': [
         ('readonly', False)]})  # string="De")
     heureFin = fields.Datetime(required=True, readonly=True, states={'draft': [('readonly', False)],
                                                                      'modifier': [('readonly', False)]})  # string="A")
@@ -99,15 +106,16 @@ class ordre_mission(models.Model):
 
     destination = fields.Char(string = "Destination", required=True, readonly=True, states={'draft':[('readonly',False)]})
 
-    destination_state_id = fields.Many2one("res.country.state", required=True, readonly=True,
-                                           states={'draft': [('readonly', False)], 'modifier': [('readonly', False)]})
-    destination_country_id = fields.Many2one('res.country', required=True, readonly=True,
-                                             states={'draft': [('readonly', False)], 'modifier': [('readonly', False)]})
+    # destination_state_id = fields.Many2one("res.country.state", required=True, readonly=True,
+    #                                        states={'draft': [('readonly', False)], 'modifier': [('readonly', False)]})
+    # destination_country_id = fields.Many2one('res.country', required=True, readonly=True,
+    #                                          states={'draft': [('readonly', False)], 'modifier': [('readonly', False)]})
 
-    description = fields.Text(string="Description", required=True, readonly=True,
+    objet_du_mission = fields.Text(string="Objet du mission", required=True, readonly=True,
                               states={'draft': [('readonly', False)]})
     transport = fields.Selection([('Vehicule Personel', "Vehicule Personel"), ('Autre', "Autre"), ], 'Transport',
                                  required=True, readonly=True, states={'draft': [('readonly', False)]})
+
     autre_moyen = fields.Char()
     matriculeVoit = fields.Char(string="Registration", readonly=True, states={'draft': [('readonly', False)]})
     precision = fields.Text(string="Note", readonly=True, states={'draft': [('readonly', False)]})
@@ -397,6 +405,11 @@ class ordre_mission(models.Model):
         date_from = datetime.strftime(heure_Debut, "%Y-%m-%d %H:%M:%S")
         print("date_now*********************", date_now)
         print("date_from*********************", date_from)
+
+
+
+
+
         if date_from < date_now:
             raise exceptions.ValidationError(
                 "Vous ne pouvez pas créer une demande d'ordre de mission avant " + date_now + " !")

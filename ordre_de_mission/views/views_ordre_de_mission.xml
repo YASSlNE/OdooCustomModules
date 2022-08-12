@@ -26,7 +26,7 @@
 					<field name="heureDebut" string="Beginning hour"/>
 					<!--field name="date_aut_aff"/-->
 					<field name="intervalAut" string="Number of hours"/>
-					<field name="description"/>
+					<field name="objet_du_mission"/>
 					<field name="state" string="State"/>
 				</tree>
 			</field>
@@ -80,9 +80,9 @@
 						     </group>
 						     <group>
 							<div>
-							<b> In </b>
-							<field name="lieuCreate" class="oe_inline"/>
-							<b> the: </b>
+							<b> En: </b>
+							<field name="lieuCree" class="oe_inline"/>
+							<b> Le: </b>
 							<field name="dateCreate" class="oe_inline"/></div>
 						     </group>
 						</group>
@@ -105,57 +105,20 @@
 						</group>
 
 						<group><field name="intervalAut" string="Number of hours"/></group>
-							<!--<group>-->
+						<group><field name="lieuDestination" string="Destination" placeholder="Gouvernorat" class="o_address_state" options='{"no_open": True}' style="width:50%%"/></group>
+								<group>
+									<field name="objet_du_mission" placeholder="Add your description..." style="width:50%%"/>
+								</group>
 
-
-
-
-						<group>
-							<label for="destination_state_id" string="Destination" align="right"/>
-							<div class="o_address_format">
-
-							<field name="destination_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}' style="width:50%%"/>
-							<field name="destination_state_id"  placeholder="State" class="o_address_state" options='{"no_open": True}' style="width:50%%"/>
-							</div>
-						</group>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-							<!---->
-							<!---->
-							<!---->
-							<!--<field name="destination_state_id" placeholder="Ajouter votre région..."/>-->
-							<!--<field name="destination_country_id" placeholder="Ajouter votre pays..."/>-->
-<group>							<field name="description" placeholder="Add your description..." style="width:50%%"/>
-</group>
-                                                <group>
 							<group>
 								<field name="transport" widget="radio"/>
 							</group>
 							<group>
 								<field name="matriculeVoit" attrs="{'invisible':[('transport','!=','Vehicule Personel')],'required':[('transport','=','Vehicule Personel')]}" />
 								<field name="precision" attrs="{'invisible':[('transport','!=','Autre')],'required':[('transport','=','Autre')]}"/>
+
 							</group>
-						</group> </page>
+							</page>
 							<page string= "Notes">
 								<group>
 									<field name="visibility_note_chef" invisible="1"/>
@@ -231,9 +194,9 @@
 		            <field name="employee_id"/>
 		            <field name="heureDebut"/>
 		            <field name="intervalAut"/>
-					<field name="destination_country_id"/>
-					<field name="destination_state_id"/>
-					<field name="description"/>
+<!--					<field name="destination_country_id"/>-->
+<!--					<field name="destination_state_id"/>-->
+					<field name="objet_du_mission"/>
 		            <field name="state" string="State"/>
 					<field name="chef_id" invisible="1"/>
 					<field name="user_id" invisible="1"/>

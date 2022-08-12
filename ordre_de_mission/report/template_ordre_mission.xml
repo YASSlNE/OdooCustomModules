@@ -34,71 +34,20 @@
     <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
             <t t-call="web.external_layout">
-        <!--<t t-call="web.internal_layout">-->
 
                 <div class="page">
-<!--                                        <table style="width:100%; margin-top: -50px;">-->
-<!--<thead>-->
-<!--&lt;!&ndash;<img src = "iway.png"></img>&ndash;&gt;-->
-<!--    <tr><td>-->
-<!--        <img t-att-src="'data:image/png;base64,%s' % to_text(o.company_id['logo_web'])"/></td>-->
 
-<!--</tr>-->
 
-<!--</thead>-->
-<!--</table>-->
-                    <!--<table style="width:100%; margin-top: -50px;">-->
-<!--<thead>-->
-
-   <!--&lt;!&ndash; <tr><td>-->
-        <!--<img t-att-src="'data:image/png;base64,%s' % to_text(o.company_id['logo_web'])"/></td>-->
-
-<!--</tr>&ndash;&gt;-->
-
-<!--</thead>-->
-<!--</table>-->
+                    <strong><h2 class="font-weight-bold" style="text-align:center; color:black;"> ORDRE DE MISSION </h2></strong>
+                    <strong><h2 class="font-weight-bold" style="text-align:center; color:black;"> <span t-field="o.name" /></h2></strong>
 
 
 
 
 
+                <div>
 
-
-
-
-
-                    <strong><h2 class="font-weight-bold" style="text-align:center;"> ORDRE DE MISSION </h2></strong>
-                    <strong><h2 class="font-weight-bold" style="text-align:center;"> <span t-field="o.name" /></h2></strong>
-
-
-
-
-<!-- <style>-->
-<!--     #form_body label{-->
-<!--        margin-bottom:17px;-->
-<!--     }-->
-<!--     #form_body input{-->
-<!--        height:32px;-->
-<!--        width:44px;-->
-<!--     }-->
-<!--     .immatricule{-->
-<!--        display:flex;-->
-<!--        justify-content: space-between;-->
-<!--        width:554px;-->
-<!--     }-->
-
-<!--     .autre{-->
-<!--        display:flex;-->
-<!--        justify-content: space-between;-->
-<!--        width:100px;-->
-<!--     }-->
-<!-- </style>-->
-
-                <div id="form_body">
-<br/>
-<!--                    <label style="margin-bottom:17px;">-->
-                        (Mr. / Mme.):<strong>   <span t-field="o.employee_id" style="border: 1px solid white;font-size: 1em;"/></strong>
-<!--                    </label>-->
+<br/><label style="margin-bottom:17px;">(Mr./Mme.):<strong><span t-field="o.employee_id" style="border: 1px solid white;font-size: 1em;"/></strong></label>
 
 
 
@@ -114,19 +63,19 @@
 
 
 
-<br/><label style="margin-bottom:17px;">  à :  <strong><span t-field="o.destination_state_id" style="border: 1px solid white;font-size: 1em;"/></strong></label>
+<br/><label style="margin-bottom:17px;">  Destination :  <strong><span t-field="o.lieuDestination" style="border: 1px solid white;font-size: 1em;"/></strong></label>
 
 
 
 
+
+
+<br/><label style="width: 700px;
+  margin: auto;"> Objet : <strong><span t-field="o.objet_du_mission" style="border: 1px solid white;font-size: 1em;"/></strong></label>
+<br/><label style="margin-bottom:17px;"> Durée de mission : <strong><span t-field="o.intervalAut" style="border: 1px solid white;font-size: 1em;"/></strong></label>
 
 
 <br/>
-<!--label/>-->
-                    <label style="margin-bottom:17px;"> Objet : <strong><span t-field="o.description" style="border: 1px solid white;font-size: 1em;"/></strong></label>
-
-
-<br/><!--label/>-->
 
 
 <label style="margin-bottom:17px;">Pour cette mission il utilisera : </label>
@@ -137,10 +86,13 @@
 
     <div style="display:flex;
         justify-content: space-between;
-        width:554px;">
-        <input type="checkbox" style="height:32px;
+        width:800px;">
+        <input t-if="o.matriculeVoit" checked="checked" type="checkbox" style="height:32px;
         width:44px;"/>
-    Son véhicule personnel dont l’immatriculation<input type="text"  name="pincode" maxlength="3" required="required"/> تونس <input type="text"  name="pincode" maxlength="4" required="required"/>
+        <input t-if="not o.matriculeVoit" type="checkbox" style="height:32px;
+        width:44px;"/>
+    Son véhicule personnel dont l’immatriculation :
+        <span t-field="o.matriculeVoit" style="border: 1px solid white;font-size: 1em;"/>
     </div>
     <br />
     </label>
@@ -148,44 +100,29 @@
     <label style="margin-bottom:17px;">
         <div style="display:flex;
         justify-content: space-between;
-        width:100px;">
-    <input type="checkbox" style="height:32px;
+        width:500px;">
+
+            <input t-if="o.precision" checked="checked" type="checkbox" style="height:32px;
         width:44px;"/>
-    Autre</div>
+    <input t-if="not o.precision" type="checkbox" style="width: 700px;
+  margin: auto;"/>
+    Autre : <span t-field="o.precision" style="border: 1px solid white;font-size: 1em;"/></div>
 
 </label>
 </strong>
 
-
-
-
-<!--<p style="border: 1px solid white;font-size: 1.2em; margin-top: 52px;">Nous soussignés, la société <strong><span t-field="o.company_id" style="border: 1px solid white;font-size: 1em;"/></strong>au capital de  <strong><span t-esc="'%.3f'% o.company_id.capital_social" style="border: 1px solid white;font-size: 1em;"/></strong> Immatriculée-->
-<!--au registre de commerce de Tunis sous le numéro RC N°  <strong><span t-field="o.company_id.company_registry" style="border: 1px solid white;font-size: 1em;"/></strong>  sise à <strong><span t-field="o.company_id.street" style="border: 1px solid white;font-size: 1em;"/></strong> , <strong><span t-field="o.company_id.street2" style="border: 1px solid white;font-size: 1em;"/></strong> <strong><span t-field="o.company_id.zip" style="border: 1px solid white;font-size: 1em;"/></strong> - <strong><span t-field="o.company_id.city" style="border: 1px solid white;font-size: 1em;"/></strong>- <strong><span t-field="o.company_id.country_id" style="border: 1px solid white;font-size: 1em;"/></strong></p>-->
-
-
-
-<!--<p style="border: 1px solid white;font-size: 1.2em;">Attestons par la présente, que</p>-->
-
-
-
-
-
-
-
-
-
-<!--<p style="border: 1px solid white;font-size: 1.2em;"> <strong><span t-field="o.situation" style="border: 1px solid white;text-align:center;font-size: 1em;"/></strong> <strong><span t-field="o.name" style="border: 1px solid white;text-align:center;font-size: 1em;"/></strong>  née le <strong><span t-field="o.birthday" style="border: 1px solid white;text-align:center;font-size: 1em;"/></strong>       à <strong><span t-field="o.place_of_birth" style="border: 1px solid white;text-align:center;font-size: 1em;"/></strong> , titulaire de la CIN numéro     <strong><span t-field="o.identification_id" style="border: 1px solid white;font-size: 1em;"/></strong> délivrée à Tunis le <strong><span t-field="o.date_deliv" style="border: 1px solid white;font-size: 1em;"/></strong>, est une employée au sein notre société en qualité de <strong><span t-field="o.job_id" style="border: 1px solid white;font-size: 1em;"/></strong> depuis le <strong><span t-field="o.date_embauche_employee" style="border: 1px solid white;font-size: 1em;"/></strong> </p>-->
-
-
-<!--<p style="border: 1px solid white;text-align:left;font-size: 1.2em;">-->
-
 <br />
 
 
-<label style="margin-bottom:17px;"><p style="text-align:left;"><b>Fait à Tunis, </b> le <sapn t-esc="o.create_date.strftime('%d, %b %Y')" /></p></label>
+<label style="margin-bottom:17px;"><p style="text-align:left;"><b>Fait à <sapn t-esc="o.lieuCree.name" />, </b> le <sapn t-esc="o.create_date.strftime('%d, %b %Y')" /></p></label>
                 </div>
-<strong><p style="border: 1px solid white;text-align:left;font-size: 1.2em;margin-top: 87px;">Le Salarié </p></strong>
-<strong><p style="border: 1px solid white;text-align:right;font-size: 1.2em;  margin-top: -16px;">La Direction </p></strong>
+                    <label>En deux exemplaires originaux </label>
+
+<br />
+                    <div style="margin-top:40px;display: block;">
+<strong><span style="border: 1px solid white;font-size: 1.2em;margin-left: 70px;">Le Salarié </span></strong>
+<strong><span style="border: 1px solid white;font-size: 1.2em;margin-left: 520px;">La Direction </span></strong>
+                        </div>
                 </div>
             </t>
         </t>
