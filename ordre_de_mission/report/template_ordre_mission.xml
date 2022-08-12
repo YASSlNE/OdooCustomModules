@@ -84,9 +84,10 @@
 <strong><label style="margin-bottom:17px;">
 
 
-    <div style="display:flex;
+    <div style="display:block;
         justify-content: space-between;
-        width:800px;">
+        width:800px;
+        margin:auto;">
         <input t-if="o.matriculeVoit" checked="checked" type="checkbox" style="height:32px;
         width:44px;"/>
         <input t-if="not o.matriculeVoit" type="checkbox" style="height:32px;
@@ -98,9 +99,10 @@
     </label>
     <br />
     <label style="margin-bottom:17px;">
-        <div style="display:flex;
+        <div style="display:block;
         justify-content: space-between;
-        width:500px;">
+        width:800px;
+        margin:auto;">
 
             <input t-if="o.precision" checked="checked" type="checkbox" style="height:32px;
         width:44px;"/>
@@ -121,7 +123,7 @@
 <br />
                     <div style="margin-top:40px;display: block;">
 <strong><span style="border: 1px solid white;font-size: 1.2em;margin-left: 70px;">Le Salarié </span></strong>
-<strong><span style="border: 1px solid white;font-size: 1.2em;margin-left: 520px;">La Direction </span></strong>
+<strong><span style="border: 1px solid white;font-size: 1.2em;margin-left: 450px;">La Direction </span></strong>
                         </div>
                 </div>
             </t>
