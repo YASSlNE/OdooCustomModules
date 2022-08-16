@@ -5,6 +5,9 @@ from dateutil.relativedelta import relativedelta
 from datetime import datetime, timedelta
 import calendar
 
+class Projet(models.Model):
+    _name = "ordre.de.mission.projet"
+    name = fields.Char()
 
 
 class LieuCree(models.Model):
@@ -106,16 +109,18 @@ class ordre_mission(models.Model):
 
     destination = fields.Char(string = "Destination", required=True, readonly=True, states={'draft':[('readonly',False)]})
 
+    projet_id = fields.Many2one('ordre.de.mission.projet', string = "Project")
+
+    client_id = fields.Many2one('res.partner')
     # destination_state_id = fields.Many2one("res.country.state", required=True, readonly=True,
     #                                        states={'draft': [('readonly', False)], 'modifier': [('readonly', False)]})
     # destination_country_id = fields.Many2one('res.country', required=True, readonly=True,
     #                                          states={'draft': [('readonly', False)], 'modifier': [('readonly', False)]})
 
-    objet_du_mission = fields.Text(string="Objet du mission", required=True, readonly=True,
+    objet_de_mission = fields.Text(string="Mission object", required=True, readonly=True,
                               states={'draft': [('readonly', False)]})
     transport = fields.Selection([('Vehicule Personel', "Vehicule Personel"), ('Autre', "Autre"), ], 'Transport',
                                  required=True, readonly=True, states={'draft': [('readonly', False)]})
-
     autre_moyen = fields.Char()
     matriculeVoit = fields.Char(string="Registration", readonly=True, states={'draft': [('readonly', False)]})
     precision = fields.Text(string="Note", readonly=True, states={'draft': [('readonly', False)]})
@@ -130,7 +135,7 @@ class ordre_mission(models.Model):
     user_id = fields.Many2one(related='employee_id.user_id', string='User', store=True)
     department_id = fields.Many2one(related='employee_id.department_id', string='Department', store=True)
     ##related field
-    chef_id = fields.Many2one(related='employee_id.parent_id', string='Chef equipe', store=True)
+    chef_id = fields.Many2one(related='employee_id.parent_id', string='Head team', store=True)
     date_aut_aff = fields.Char(string="Date Autorisation", store=True)
 
     state = fields.Selection([('draft', "In creation"),

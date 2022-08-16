@@ -26,7 +26,7 @@
 					<field name="heureDebut" string="Beginning hour"/>
 					<!--field name="date_aut_aff"/-->
 					<field name="intervalAut" string="Number of hours"/>
-					<field name="objet_du_mission"/>
+					<field name="objet_de_mission"/>
 					<field name="state" string="State"/>
 				</tree>
 			</field>
@@ -47,8 +47,8 @@
 
 						<!--<button name="s_modifier" type="object" string="Modifier" states="envoyer" class="oe_highlight"/>-->
 
-						<button name="s_retour1" type="object" string="à modifier" states="envoyer" class="oe_highlight" />
-						<button name="s_retour2" type="object" string="à modifier" states="confirmerA" class="oe_highlight" />
+						<button name="s_retour1" type="object" string="To modify" states="envoyer" class="oe_highlight" />
+						<button name="s_retour2" type="object" string="To modify" states="confirmerA" class="oe_highlight" />
 
 
 
@@ -80,9 +80,9 @@
 						     </group>
 						     <group>
 							<div>
-							<b> En: </b>
+							<b> At: </b>
 							<field name="lieuCree" class="oe_inline"/>
-							<b> Le: </b>
+							<b> In: </b>
 							<field name="dateCreate" class="oe_inline"/></div>
 						     </group>
 						</group>
@@ -104,10 +104,20 @@
 							<field name="heureFin" class="oe_inline"/></div>
 						</group>
 
-						<group><field name="intervalAut" string="Number of hours"/></group>
-						<group><field name="lieuDestination" string="Destination" placeholder="Gouvernorat" class="o_address_state" options='{"no_open": True}' style="width:50%%"/></group>
+						<group>
+							<field name="intervalAut" string="Number of hours"/>
+						</group>
+						<group>
+							<field name="lieuDestination" string="Destination" placeholder="Gouvernorat" class="o_address_state" options='{"no_open": True}' style="width:50%%"/>
+						</group>
 								<group>
-									<field name="objet_du_mission" placeholder="Add your description..." style="width:50%%"/>
+							<field name="projet_id"/>
+						</group>
+								<group>
+							<field name="client_id"/>
+						</group>
+								<group>
+									<field name="objet_de_mission" placeholder="Add your description..." style="width:50%%"/>
 								</group>
 
 							<group>
@@ -152,12 +162,12 @@
 		        <search string="Search Mission Order">
 		            <field name="name" string="Reference"/>
 		            <separator/>
-		            <filter name="en_creation" domain="[('state','=','draft')]" string="En création"/>
-		            <filter name="en_attente_validation_1" domain="[('state','=','envoyer')]" string="En attente validation1"/>
-		            <filter name="en_attente_validation_2" domain="[('state','=','confirmerA')]" string="En attente validation2"/>
-					<filter name="en_attente_impression" domain="[('state','=','confirmerV')]" string="En attente d'impression"/>
-					<filter name="en_attente_de_signature" domain="[('state','=','imprimer')]" string="En attente de signature"/>
-					<filter name="archiver" domain="[('state','=','archiver')]" string="Archiver"/>
+		            <filter name="en_creation" domain="[('state','=','draft')]" string="In creation"/>
+		            <filter name="en_attente_validation_1" domain="[('state','=','envoyer')]" string="Waiting for validation1"/>
+		            <filter name="en_attente_validation_2" domain="[('state','=','confirmerA')]" string="Waiting for validation2"/>
+					<filter name="en_attente_impression" domain="[('state','=','confirmerV')]" string="Waiting for d'impression"/>
+					<filter name="en_attente_de_signature" domain="[('state','=','imprimer')]" string="Waiting for de signature"/>
+					<filter name="archiver" domain="[('state','=','archiver')]" string="Archive"/>
 		            <separator/>
 		            <filter name="annee" string="Year"
 		                domain="['|','&amp;',('heureFin', '&lt;=', time.strftime('%%Y-12-31')),
@@ -196,7 +206,7 @@
 		            <field name="intervalAut"/>
 <!--					<field name="destination_country_id"/>-->
 <!--					<field name="destination_state_id"/>-->
-					<field name="objet_du_mission"/>
+					<field name="objet_de_mission"/>
 		            <field name="state" string="State"/>
 					<field name="chef_id" invisible="1"/>
 					<field name="user_id" invisible="1"/>
