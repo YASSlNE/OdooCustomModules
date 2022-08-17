@@ -3,20 +3,16 @@ from datetime import datetime, timedelta
 
 class RapportIntervention(models.Model):
     _name = 'rapport.intervention'
+    name = fields.Char("Name")
     mission_id = fields.Many2one('ordre.mission')
     client_id = fields.Many2one('res.partner', related = 'mission_id.client_id')
     projet_id = fields.Many2one('ordre.de.mission.projet', related = 'mission_id.projet_id')
     date_begin = fields.Datetime()
     date_end = fields.Datetime()
     duree = fields.Char()
-    display_type = fields.Selection([
-
-       ( 'line_section' , "Section" ) ,
-
-       ( 'line_note' , "Note" )] , default = False , help = "Technical field for UX purpose." )
-    ri_id = fields.Many2one('rapport.intervention.lines')
-
-
+    line_e_ids = fields.One2many('rapport.intervention.lines.employes', 'rie_id')
+    line_c_ids = fields.One2many('rapport.intervention.lines.clients', 'ric_id')
+    line_t_ids = fields.One2many('rapport.intervention.lines.taches', 'rit_id')
     @api.model
     def create(self, values):
         print(f"the mission id is {values['mission_id']}")
@@ -31,7 +27,6 @@ class RapportIntervention(models.Model):
         dateInputMaxConverted = datetime.strptime(values['date_end'], "%Y-%m-%d %H:%M:%S")
 
 
-
         dateInputMin = datetime.strftime(dateInputMinConverted, "%Y-%m-%d")
         dateInputMax = datetime.strftime(dateInputMaxConverted, "%Y-%m-%d")
         if(dateInputMin<dateLimitMin or dateInputMax>dateLimitMax):
@@ -43,7 +38,18 @@ class RapportIntervention(models.Model):
             return res
 
 
-class RapportInterventionLines(models.Model):
-    _name = 'rapport.intervention.lines'
-    name = fields.Char("Name")
-    line_ids = fields.One2many('rapport.intervention', 'ri_id')
+class RapportInterventionLinesEmployes(models.Model):
+    _name = 'rapport.intervention.lines.employes'
+    rie_id = fields.Many2one('rapport.intervention')
+    employes = fields.Many2one('hr.employee', string="Employés")
+class RapportInterventionLinesClients(models.Model):
+    _name = 'rapport.intervention.lines.clients'
+    ric_id = fields.Many2one('rapport.intervention')
+    clients = fields.Many2one('res.partner', string="Clients") 
+class RapportInterventionLinesTaches(models.Model):
+    _name = 'rapport.intervention.lines.taches'
+    rit_id = fields.Many2one('rapport.intervention')
+    description = fields.Char()
+    status = fields.Selection([('E', 'En cours'), ('C', 'Clôturé')])
+    rie_related = fields.Many2one('rapport.intervention.lines.employes')
+    employes = fields.Many2one(relation='hr.employee', related='rie_related.employes')

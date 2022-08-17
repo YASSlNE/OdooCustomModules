@@ -12,10 +12,10 @@
 
 
 
-        		<record id="view_rapport_d_intervention_form" model="ir.ui.view">
+        		<!-- <record id="view_rapport_d_intervention_form" model="ir.ui.view">
 			<field name="name">rapport.intervention.lines</field>
 			<field name="model">rapport.intervention.lines</field>
-			<field name="arch" type="xml">
+			<field name="arch" type="xml"> -->
 <!-- 				<form string="Rapport d'intervention" id="form_intervention">
                     <sheet>
 						<notebook>
@@ -36,7 +36,7 @@
 						</notebook>
 					</sheet>
 				</form> -->
- <form>
+ <!-- <form>
 
            <sheet name ="My model" >
 
@@ -54,7 +54,7 @@
 
                        <page string ="Lines" >
 
-                           <field name ="line_ids" widget =" section_and_note_one2many "
+                           <field name ="line_ids" widget ="one2many "
 
                                   mode ="tree" context ="{'default_my_id': active_id}" >
 
@@ -78,9 +78,9 @@
 
                                    <field name ="duree" widget =" section_and_note_text " />
 
-                                   <field name ="display_type " force_save ="1"   invisible ="1" />
+                                   <field name ="display_type " force_save ="1"   invisible ="1" /> -->
 
-                                   <field name ="duree" />
+                  <!--                  <field name ="duree" />
 
                                    <field name ="duree" />
 
@@ -96,8 +96,74 @@
        </form>
 
 			</field>
-		</record>
+		</record>  -->
 
+
+		<record id ="mymodel_report_form_view" model ="ir.ui.view" >
+
+   <field name ="name" > My Model view form </field>
+
+   <field name ="model" >rapport.intervention</field>
+
+   <field name ="arch" type ="xml" >
+       <form>
+           <sheet name ="My model" >
+               <group>
+                   <group col ="1" >
+                   	<field name ="mission_id" />
+                   	<field name ="client_id" />
+                   	<field name ="projet_id" />
+               </group>
+                <group col ="2">
+                	<field name="date_begin" widget="daterange" options="{ 'related_end_date': 'date_end'}"/>
+                    <field name="date_end" widget="daterange" options="{'related_start_date': 'date_begin'}"/>
+                </group>
+                        <!--           <group colspan="3">
+                   <group col ="1">
+                   </group>
+                </group> -->
+               </group>
+               <notebook>
+                       <page string ="Les intervenants I-Way" >
+                           <field name ="line_e_ids" widget ="section_and_note_one2many "
+                                  mode ="tree" context ="{'default_my_id': active_id}" >
+                               <tree string="Example Lines" editable ="bottom" >
+                                   <control>
+                                       <create name ="add_line_control" string ="Add a record" />
+                                   </control>
+                                   <field name="employes" string="Employés de I-Way" />
+                               </tree>
+                           </field>
+                       </page>
+                       <page string ="Les intervenants Clients" >
+                           <field name ="line_c_ids" widget ="section_and_note_one2many "
+                                  mode ="tree" context ="{'default_my_id': active_id}" >
+                               <tree string ="Example Lines" editable ="bottom" >
+                                   <control>
+                                       <create name ="add_line_control" string ="Add a record" />
+                                   </control>
+                                   <field name="clients" string="Clients" />
+                               </tree>
+                           </field>
+                       </page>
+                       <page string ="Taches" >
+                           <field name ="line_t_ids" widget ="section_and_note_one2many "
+                                  mode ="tree" context ="{'default_my_id': active_id}" >
+                               <tree string ="Example Lines" editable ="bottom" >
+                                   <control>
+                                       <create name ="add_line_control" string ="Add a record" />
+                                   </control>
+                                   <field name="description" />
+                                   <field name="status" />
+                                   <field name="employes" />
+                               </tree>
+                           </field>
+                       </page>
+                </notebook>
+           </sheet>
+       </form>
+   </field>
+</record>
 
 
 
