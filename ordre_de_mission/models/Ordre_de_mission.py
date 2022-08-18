@@ -5,9 +5,9 @@ from dateutil.relativedelta import relativedelta
 from datetime import datetime, timedelta
 import calendar
 
-class Projet(models.Model):
-    _name = "ordre.de.mission.projet"
-    name = fields.Char()
+# class Projet(models.Model):
+#     _name = "ordre.de.mission.projet"
+#     name = fields.Char()
 
 
 class LieuCree(models.Model):
@@ -109,7 +109,7 @@ class ordre_mission(models.Model):
 
     destination = fields.Char(string = "Destination", required=True, readonly=True, states={'draft':[('readonly',False)]})
 
-    projet_id = fields.Many2one('ordre.de.mission.projet', string = "Project")
+    projet_id = fields.Many2one('project.project', string = "Project")
 
     client_id = fields.Many2one('res.partner')
     # destination_state_id = fields.Many2one("res.country.state", required=True, readonly=True,

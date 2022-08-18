@@ -110,9 +110,11 @@
            <sheet name ="My model" >
                <group>
                    <group col ="1" >
-                   	<field name ="mission_id" />
+                   	<field name ="employes" string="Intervenants employés" widget="many2many_tags"/>
                    	<field name ="client_id" />
                    	<field name ="projet_id" />
+                   	<field name ="mission_id" widget="many2many_tags"/>
+                   	<field name ="clients" string="Intervenants clients" widget="many2many_tags"/>
                </group>
                 <group col ="2">
                 	<field name="date_begin" widget="daterange" options="{ 'related_end_date': 'date_end'}"/>
@@ -124,28 +126,6 @@
                 </group> -->
                </group>
                <notebook>
-                       <page string ="Les intervenants I-Way" >
-                           <field name ="line_e_ids" widget ="section_and_note_one2many "
-                                  mode ="tree" context ="{'default_my_id': active_id}" >
-                               <tree string="Example Lines" editable ="bottom" >
-                                   <control>
-                                       <create name ="add_line_control" string ="Add a record" />
-                                   </control>
-                                   <field name="employes" string="Employés de I-Way" />
-                               </tree>
-                           </field>
-                       </page>
-                       <page string ="Les intervenants Clients" >
-                           <field name ="line_c_ids" widget ="section_and_note_one2many "
-                                  mode ="tree" context ="{'default_my_id': active_id}" >
-                               <tree string ="Example Lines" editable ="bottom" >
-                                   <control>
-                                       <create name ="add_line_control" string ="Add a record" />
-                                   </control>
-                                   <field name="clients" string="Clients" />
-                               </tree>
-                           </field>
-                       </page>
                        <page string ="Taches" >
                            <field name ="line_t_ids" widget ="section_and_note_one2many "
                                   mode ="tree" context ="{'default_my_id': active_id}" >

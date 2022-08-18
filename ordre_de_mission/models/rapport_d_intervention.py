@@ -1,18 +1,35 @@
 from odoo import models, fields, api, exceptions
 from datetime import datetime, timedelta
-
+import inspect
 class RapportIntervention(models.Model):
     _name = 'rapport.intervention'
     name = fields.Char("Name")
-    mission_id = fields.Many2one('ordre.mission')
-    client_id = fields.Many2one('res.partner', related = 'mission_id.client_id')
-    projet_id = fields.Many2one('ordre.de.mission.projet', related = 'mission_id.projet_id')
+
+
+    mission_id = fields.Many2many('ordre.mission', domain="[('employee_id', 'in', employes), ('projet_id', '=', projet_id), ('client_id', '=', client_id)]")
+    client_id = fields.Many2one('res.partner')
+    projet_id = fields.Many2one('project.project')
     date_begin = fields.Datetime()
     date_end = fields.Datetime()
-    duree = fields.Char()
-    line_e_ids = fields.One2many('rapport.intervention.lines.employes', 'rie_id')
-    line_c_ids = fields.One2many('rapport.intervention.lines.clients', 'ric_id')
+    employes = fields.Many2many('hr.employee')
+    clients = fields.Many2many('res.partner', domain="[('parent_id', '=', client_id)]" )
     line_t_ids = fields.One2many('rapport.intervention.lines.taches', 'rit_id')
+
+
+    # @api.onchange('projet_id')
+    # def fn(self):
+    #     print("-------------------------------------")
+    #     print(self.projet_id._ids)
+    #     print("-------------------------------------")
+
+
+    # @api.depends('employes2')
+    # def _compute_employes(self):
+    #     for line in self:
+    #         line.employes=line.employes2._origin.id
+
+
+
     @api.model
     def create(self, values):
         print(f"the mission id is {values['mission_id']}")
@@ -29,7 +46,7 @@ class RapportIntervention(models.Model):
 
         dateInputMin = datetime.strftime(dateInputMinConverted, "%Y-%m-%d")
         dateInputMax = datetime.strftime(dateInputMaxConverted, "%Y-%m-%d")
-        if(dateInputMin<dateLimitMin or dateInputMax>dateLimitMax):
+        if(dateInputMin<dateLimitMin or rdateInputMax>dateLimitMax):
             raise exceptions.ValidationError("Intervale des dates invalide")
         else:
             duree = dateInputMaxConverted-dateInputMinConverted+timedelta(days=1)
@@ -38,18 +55,14 @@ class RapportIntervention(models.Model):
             return res
 
 
-class RapportInterventionLinesEmployes(models.Model):
-    _name = 'rapport.intervention.lines.employes'
-    rie_id = fields.Many2one('rapport.intervention')
-    employes = fields.Many2one('hr.employee', string="Employés")
-class RapportInterventionLinesClients(models.Model):
-    _name = 'rapport.intervention.lines.clients'
-    ric_id = fields.Many2one('rapport.intervention')
-    clients = fields.Many2one('res.partner', string="Clients") 
 class RapportInterventionLinesTaches(models.Model):
     _name = 'rapport.intervention.lines.taches'
     rit_id = fields.Many2one('rapport.intervention')
     description = fields.Char()
     status = fields.Selection([('E', 'En cours'), ('C', 'Clôturé')])
-    rie_related = fields.Many2one('rapport.intervention.lines.employes')
-    employes = fields.Many2one(relation='hr.employee', related='rie_related.employes')
+    employes = fields.Many2one('hr.employee')
+
+
+class StoreEmployees(models.Model):
+    _name = 'rapport.store.employees'
+    name = fields.Char()    
