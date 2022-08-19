@@ -1,0 +1,5 @@
+import inspect
+for i in inspect.getmembers(records): #record here is the class instance
+            if not i[0].startswith('_'):
+                if not inspect.ismethod(i[1]): 
+                    print(i)   
