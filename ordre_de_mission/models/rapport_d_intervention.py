@@ -1,9 +1,9 @@
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions, _
 from datetime import datetime, timedelta
 import inspect
 class RapportIntervention(models.Model):
     _name = 'rapport.intervention'
-    name = fields.Char("Name")
+    # name = fields.Char("Name")
 
 
     mission_id = fields.Many2many('ordre.mission', domain="[('employee_id', 'in', employes), ('projet_id', '=', projet_id), ('client_id', '=', client_id)]")
@@ -11,12 +11,14 @@ class RapportIntervention(models.Model):
     projet_id = fields.Many2one('project.project')
     date_begin = fields.Datetime(required=True)
     date_end = fields.Datetime(required=True)
-    employes = fields.Many2many('hr.employee')
+    employes = fields.Many2many('hr.employee', default=False)
     clients = fields.Many2many('res.partner', domain="[('parent_id', '=', client_id)]" )
     line_t_ids = fields.One2many('rapport.intervention.lines.taches', 'rit_id')
 
     duree = fields.Char()
-
+    name = fields.Char(string="Sequence", readonly=True,
+                           required = True, copy = False, index = True,
+                           default=lambda self: _('New'))
     
 
 
@@ -108,6 +110,8 @@ class RapportIntervention(models.Model):
         else:
             duree = dateInputMaxConverted-dateInputMinConverted+timedelta(days=1)
             values['duree'] = duree
+            if values.get('name', 'New') == 'New':
+                values['name']= self.env['ir.sequence'].next_by_code('rapport.intervention.ref') or 'New'
             res = super(RapportIntervention, self).create(values)
             return res
 
@@ -119,14 +123,9 @@ class RapportInterventionLinesTaches(models.Model):
     employes = fields.Many2one('hr.employee')
     @api.onchange('employes')
     def fn(self):
-        if(self.employes.id not in self.rit_id.employes.ids):
+        if((self.employes.id not in self.rit_id.employes.ids) and (self.employes.id!=False)):
             raise exceptions.ValidationError(f"L'employé doit être un des employés choisi")
-
-    @api.model
-    def create(self, values):
-        print(values['employes'])
-        print(type(values['employes']))      
-
+            
 class StoreEmployees(models.Model):
     _name = 'rapport.store.employees'
-    name = fields.Char()    
+    name = fields.Char()

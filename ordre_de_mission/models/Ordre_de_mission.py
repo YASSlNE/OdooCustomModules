@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions, _
 # from openerp.exceptions import except_orm, Warning, RedirectWarning
 from dateutil.relativedelta import relativedelta
 from datetime import datetime, timedelta
@@ -84,6 +84,10 @@ class ordre_mission(models.Model):
             self.intervalAut = str(interval)
 
     # N°000 / 2022 for example
+
+    
+
+
     name = fields.Char(string="Reference", default="/", readonly=True)
     dateCreate = fields.Date(default=fields.Date.today, string="Creation Date", readonly=True)
     # lieuCreate = fields.Selection([('Ssssejnene', 'Tunsssis'), ('Ssssejnene', 'Ssssfax'), ('Ssssejnene', 'Ssssejnene'), ], default='Tunis')

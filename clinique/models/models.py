@@ -125,15 +125,15 @@ class RDV(models.Model):
         result = super(RDV, self).write(vals)
         return result
 
-    def _check_draft_rdvs(self):
-        k = datetime.now()
-        print(k)
-        if(k.hour==14 and k.minute==47):
-            print("qsmlkdjfsqmldkfjqsmdlfkj")
-            number_of_records = len(self.env['clinique.rdv'].search([]))
-            for i in range(number_of_records):
-                self.env['clinique.rdv'].search([])[i]['state'] = 'annule'
-            print("done")
+    # def _check_draft_rdvs(self):
+    #     k = datetime.now()
+    #     print(k)
+    #     if(k.hour==14 and k.minute==47):
+    #         print("qsmlkdjfsqmldkfjqsmdlfkj")
+    #         number_of_records = len(self.env['clinique.rdv'].search([]))
+    #         for i in range(number_of_records):
+    #             self.env['clinique.rdv'].search([])[i]['state'] = 'annule'
+    #         print("done")
 # class SwitchToCanceled(models.Model):
 #     _name = 'cron.cancel'
 #     k=1

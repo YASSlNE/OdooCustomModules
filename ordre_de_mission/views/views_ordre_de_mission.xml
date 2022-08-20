@@ -22,6 +22,7 @@
 			<field name="model">ordre.mission</field>
 			<field name="arch" type="xml">
 				<tree string="Order Mission">
+					<field name="name" />
 					<field name="employee_id" string="Name and last name" />
 					<field name="heureDebut" string="Beginning hour"/>
 					<!--field name="date_aut_aff"/-->
@@ -201,6 +202,7 @@
 		    <field name="arch" type="xml">
 				<tree decoration-danger="state=='refuser'" decoration-info="state=='draft'" decoration-bf="state in ('envoyer','confirmerA','confirmerV')" string="Leaves Summary">
 <!--		        <tree colors="red:state == 'refuser';blue:state == 'draft';black:state in ('envoyer','confirmerA','confirmerV')" string="Leaves Summary">-->
+		            <field name="name"/>
 		            <field name="employee_id"/>
 		            <field name="heureDebut"/>
 		            <field name="intervalAut"/>

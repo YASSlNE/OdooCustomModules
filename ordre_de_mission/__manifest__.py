@@ -31,6 +31,10 @@
         'report/report_ordre_mission.xml',
         'report/template_ordre_mission.xml',
         'views/views_rapport_d_intervention.xml',
+        'views/rapport_d_intervention_sequence.xml',
+        'report/report_rapport_intervention.xml',
+        'report/template_rapport_intervention.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [

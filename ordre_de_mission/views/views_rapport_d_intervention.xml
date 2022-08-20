@@ -6,8 +6,30 @@
         <record id="action_creation_rapport_d_intervention" model="ir.actions.act_window">
 			<field name="name">Rapport D'intervention</field>
 			<field name="res_model">rapport.intervention</field>
-			<field name="view_mode">kanban,tree,form</field>
+			<field name="view_mode">tree,kanban,form</field>
 		</record>
+
+
+
+
+
+    <record model="ir.ui.view" id="clinique.view_docteurs">
+      <field name="name">Liste des Docteurs</field>
+      <field name="model">rapport.intervention</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="name" />
+            <field name="mission_id" />
+            <field name="client_id" />
+            <field name="projet_id" />
+            <field name="date_begin" />
+            <field name="date_end" />
+            <field name="employes" />
+            <field name="clients" />
+            <field name="duree" />
+        </tree>
+      </field>
+    </record>
 
 
 
@@ -94,6 +116,7 @@
            </sheet>
 
        </form>
+<field name="field_2" attrs="{'readonly':[('field_1','=',False)]}"/>
 
 			</field>
 		</record>  -->
@@ -110,11 +133,11 @@
            <sheet name ="My model" >
                <group>
                    <group col ="1" >
-                   	<field name ="employes" string="Intervenants employés" widget="many2many_tags"/>
-                   	<field name ="client_id" />
-                   	<field name ="projet_id" />
-                   	<field name ="mission_id" widget="many2many_tags"/>
-                   	<field name ="clients" string="Intervenants clients" widget="many2many_tags"/>
+                   	<field options="{'create': false, 'create_edit': false}" style="margin-bottom: 30px;" name ="employes" string="Intervenants employés" widget="many2many_tags"/>
+                   	<field options="{'create': false, 'create_edit': false}" style="margin-bottom: 30px;" name ="client_id"  attrs="{'readonly':[('employes','=',False)]}"/>
+                   	<field options="{'create': false, 'create_edit': false}" style="margin-bottom: 30px;" name ="projet_id"  attrs="{'readonly':[('employes','=',False)]}"/>
+                   	<field options="{'create': false, 'create_edit': false}" style="margin-bottom: 30px;" name ="mission_id" widget="many2many_tags"  attrs="{'readonly':['|', ('client_id','=',False), ('projet_id','=',False)]}"/>
+                   	<field options="{'create': false, 'create_edit': false}" name ="clients" string="Intervenants clients" widget="many2many_tags"  attrs="{'readonly':[('client_id','=',False)]}"/>
                </group>
                 <group col ="2">
                 	<field name="date_begin" widget="daterange" options="{ 'related_end_date': 'date_end'}"/>
@@ -135,7 +158,7 @@
                                    </control>
                                    <field name="description" />
                                    <field name="status" />
-                                   <field name="employes" />
+                                   <field name="employes"/>
                                </tree>
                            </field>
                        </page>
