@@ -88,7 +88,8 @@ class ordre_mission(models.Model):
     
 
 
-    name = fields.Char(string="Reference", default="/", readonly=True)
+    name = fields.Char(string="Reference", readonly=True, copy = False, index = True,
+                           default=lambda self: _('New'))
     dateCreate = fields.Date(default=fields.Date.today, string="Creation Date", readonly=True)
     # lieuCreate = fields.Selection([('Ssssejnene', 'Tunsssis'), ('Ssssejnene', 'Ssssfax'), ('Ssssejnene', 'Ssssejnene'), ], default='Tunis')
     lieuCree = fields.Many2one('lieu.cree')
@@ -111,7 +112,7 @@ class ordre_mission(models.Model):
 
     # , 'envoyer':[('readonly', False)]}
 
-    destination = fields.Char(string = "Destination", required=True, readonly=True, states={'draft':[('readonly',False)]})
+    # destination = fields.Char(string = "Destination", required=True, readonly=True, states={'draft':[('readonly',False)]})
 
     projet_id = fields.Many2one('project.project', string = "Project")
 
@@ -176,35 +177,35 @@ class ordre_mission(models.Model):
         self.interval_c = str(interval)
 
         if interval >= duree:
-            for demande in self:
-                # demande_id = demande['id']
-                # print(demande_id)
+            # for demande in self:
+            #     # demande_id = demande['id']
+            #     # print(demande_id)
 
-                ################################################
-                mail_vals = {
-                    'body': '<html> Demande d\'ordre de mission envoyer </html>',
-                    'record_name': "Demande d'ordre de mission",
-                    # 'res_id':ids[0],
-                    # 'res_id': 1,
-                    'reply_to': self.env['res.users'].sudo().browse().name,
-                    'author_id': self.env['res.users'].sudo().browse().partner_id.id,
-                    'model': 'ordre.mission',
-                    'email_from': self.env['res.users'].sudo().browse().name,
-                    'starred': True,
-                }
-                message = self.env['mail.message'].sudo().create(mail_vals)
-                print("message", message)
-                mail_notif_vals = {
+            #     ################################################
+            #     mail_vals = {
+            #         'body': '<html> Demande d\'ordre de mission envoyer </html>',
+            #         'record_name': "Demande d'ordre de mission",
+            #         # 'res_id':ids[0],
+            #         # 'res_id': 1,
+            #         'reply_to': self.env['res.users'].sudo().browse().name,
+            #         'author_id': self.env['res.users'].sudo().browse().partner_id.id,
+            #         'model': 'ordre.mission',
+            #         'email_from': self.env['res.users'].sudo().browse().name,
+            #         'starred': True,
+            #     }
+            #     message = self.env['mail.message'].sudo().create(mail_vals)
+            #     print("message", message)
+            #     mail_notif_vals = {
 
-                    'res_partner_id': self.env['res.users'].sudo().browse(self.employee_id.user_id.id).partner_id.id,
+            #         'res_partner_id': self.env['res.users'].sudo().browse(self.employee_id.user_id.id).partner_id.id,
 
-                    'mail_message_id': message.id,
-                    'is_read': False,
-                    # 'starred': True,
+            #         'mail_message_id': message.id,
+            #         'is_read': False,
+            #         # 'starred': True,
 
-                }
-                self.env['mail.notification'].sudo().create(mail_notif_vals)
-            # self.state = 'envoyer'
+            #     }
+            #     self.env['mail.notification'].sudo().create(mail_notif_vals)
+            # # self.state = 'envoyer'
 
             self.sudo().write({'state': 'envoyer'})
         # return True
@@ -222,42 +223,42 @@ class ordre_mission(models.Model):
     # @api.one
     def s_annuler(self):
         # self.state = 'annuler'
-        for annuler in self:
-            # annuler_id=annuler['id']
+        # for annuler in self:
+        #     # annuler_id=annuler['id']
 
-            mail_vals = {
-                'body': '<html> La demande d\'ordre de mission est annulée  </html>',
-                'record_name': "Demande d'ordre de mission annulée",
-                # 'res_id':annuler.id,
-                # 'res_id': 1,
+        #     mail_vals = {
+        #         'body': '<html> La demande d\'ordre de mission est annulée  </html>',
+        #         'record_name': "Demande d'ordre de mission annulée",
+        #         # 'res_id':annuler.id,
+        #         # 'res_id': 1,
 
-                'reply_to': self.env['res.users'].sudo().browse().name,
-                'author_id': self.env['res.users'].sudo().browse().partner_id.id,
-                'model': 'ordre.mission',
-                'email_from': self.env['res.users'].sudo().browse().name,
-                'starred': True,
-            }
-            message = self.env['mail.message'].sudo().create(mail_vals)
-            print("message", message)
-            # annul = self.env['res.users'].browse(annuler_id).partner_id.id
-            # print(annul, "annuler messg")
+        #         'reply_to': self.env['res.users'].sudo().browse().name,
+        #         'author_id': self.env['res.users'].sudo().browse().partner_id.id,
+        #         'model': 'ordre.mission',
+        #         'email_from': self.env['res.users'].sudo().browse().name,
+        #         'starred': True,
+        #     }
+        #     message = self.env['mail.message'].sudo().create(mail_vals)
+        #     print("message", message)
+        #     # annul = self.env['res.users'].browse(annuler_id).partner_id.id
+        #     # print(annul, "annuler messg")
 
-            mail_notif_emp_vals = {
+        #     mail_notif_emp_vals = {
 
-                # 'res_partner_id':self.env['res.users'].browse(annuler_id).partner_id.id,
+        #         # 'res_partner_id':self.env['res.users'].browse(annuler_id).partner_id.id,
 
-                'res_partner_id': self.env['res.users'].sudo().browse(annuler.employee_id.user_id.id).partner_id.id,
+        #         'res_partner_id': self.env['res.users'].sudo().browse(annuler.employee_id.user_id.id).partner_id.id,
 
-                # 'res_partner_id': self.env['res.users'].browse(self.employee_id.user_id.id).partner_id.id,
+        #         # 'res_partner_id': self.env['res.users'].browse(self.employee_id.user_id.id).partner_id.id,
 
-                'mail_message_id': message.id,
-                'is_read': False,
-                # 'starred': True,
-            }
+        #         'mail_message_id': message.id,
+        #         'is_read': False,
+        #         # 'starred': True,
+        #     }
 
-            print(mail_notif_emp_vals, "mail_notif_emp_vals")
+        #     print(mail_notif_emp_vals, "mail_notif_emp_vals")
 
-            self.env['mail.notification'].sudo().create(mail_notif_emp_vals)
+        #     self.env['mail.notification'].sudo().create(mail_notif_emp_vals)
         # self.state = 'annuler'
         self.sudo().write({'state': 'annuler'})
         return True
@@ -274,38 +275,38 @@ class ordre_mission(models.Model):
     def s_confirmer_A(self):
         # self.state = 'confirmerA'
 
-        for confirm in self:
-            mail_vals = {
-                'body': "<html> Demande d'ordre de mission confirmée par le chef d'équipe</html>",
-                'record_name': "Confirmation du chef d'équipe",
-                'res_id': confirm.id,
-                'reply_to': self.env['res.users'].browse().name,
-                'author_id': self.env['res.users'].browse().partner_id.id,
-                'model': 'ordre.mission',
-                'email_from': self.env['res.users'].browse().name,
-                'starred': True,
-            }
-            message = self.env['mail.message'].create(mail_vals)
-            print(message, 'message')
+        # for confirm in self:
+        #     mail_vals = {
+        #         'body': "<html> Demande d'ordre de mission confirmée par le chef d'équipe</html>",
+        #         'record_name': "Confirmation du chef d'équipe",
+        #         'res_id': confirm.id,
+        #         'reply_to': self.env['res.users'].browse().name,
+        #         'author_id': self.env['res.users'].browse().partner_id.id,
+        #         'model': 'ordre.mission',
+        #         'email_from': self.env['res.users'].browse().name,
+        #         'starred': True,
+        #     }
+        #     message = self.env['mail.message'].create(mail_vals)
+        #     print(message, 'message')
 
-            mail_notif_dep_vals = {
-                # modif mromdhan: coach_id
-                'res_partner_id': self.env['res.users'].browse(confirm.employee_id.coach_id.user_id.id).partner_id.id,
+        #     mail_notif_dep_vals = {
+        #         # modif mromdhan: coach_id
+        #         'res_partner_id': self.env['res.users'].browse(confirm.employee_id.coach_id.user_id.id).partner_id.id,
 
-                'mail_message_id': message.id,
-                'is_read': False,
-                # 'starred': True,
-            }
-            self.env['mail.notification'].create(mail_notif_dep_vals)
+        #         'mail_message_id': message.id,
+        #         'is_read': False,
+        #         # 'starred': True,
+        #     }
+        #     self.env['mail.notification'].create(mail_notif_dep_vals)
 
-            mail_notif_emp_vals = {
+        #     mail_notif_emp_vals = {
 
-                'res_partner_id': self.env['res.users'].browse(confirm.employee_id.user_id.id).partner_id.id,
-                'mail_message_id': message.id,
-                'is_read': False,
-                # 'starred': True,
-            }
-            self.env['mail.notification'].create(mail_notif_emp_vals)
+        #         'res_partner_id': self.env['res.users'].browse(confirm.employee_id.user_id.id).partner_id.id,
+        #         'mail_message_id': message.id,
+        #         'is_read': False,
+        #         # 'starred': True,
+        #     }
+        #     self.env['mail.notification'].create(mail_notif_emp_vals)
         self.state = 'confirmerA'
         # self.write({'state': 'confirmerA'})
         # return True
@@ -318,28 +319,28 @@ class ordre_mission(models.Model):
     def s_confirmer_V(self):
         # self.state = 'confirmerV'
         #
-        for valid in self:
-            mail_vals = {
-                'body': "<html>Demande d'ordre de mission validée chef de département envoyer  </html>",
-                'record_name': 'Validation du responsable département',
-                'res_id': valid.id,
-                'reply_to': self.env['res.users'].browse().name,
-                'author_id': self.env['res.users'].browse().partner_id.id,
-                'model': 'ordre.mission',
-                'email_from': self.env['res.users'].browse().name,
-                'starred': True,
-            }
-            message = self.env['mail.message'].create(mail_vals)
+        # for valid in self:
+        #     mail_vals = {
+        #         'body': "<html>Demande d'ordre de mission validée chef de département envoyer  </html>",
+        #         'record_name': 'Validation du responsable département',
+        #         'res_id': valid.id,
+        #         'reply_to': self.env['res.users'].browse().name,
+        #         'author_id': self.env['res.users'].browse().partner_id.id,
+        #         'model': 'ordre.mission',
+        #         'email_from': self.env['res.users'].browse().name,
+        #         'starred': True,
+        #     }
+        #     message = self.env['mail.message'].create(mail_vals)
 
-            mail_notif_emp_vals = {
+        #     mail_notif_emp_vals = {
 
-                'res_partner_id': self.env['res.users'].browse(valid.employee_id.user_id.id).partner_id.id,
-                # 'partner_id': self.env['res.users'].browse(valid.employee_id.user_id.id).partner_id.id,
-                'mail_message_id': message.id,
-                'is_read': False,
-                # 'starred': True,
-            }
-            self.env['mail.notification'].create(mail_notif_emp_vals)
+        #         'res_partner_id': self.env['res.users'].browse(valid.employee_id.user_id.id).partner_id.id,
+        #         # 'partner_id': self.env['res.users'].browse(valid.employee_id.user_id.id).partner_id.id,
+        #         'mail_message_id': message.id,
+        #         'is_read': False,
+        #         # 'starred': True,
+        #     }
+        #     self.env['mail.notification'].create(mail_notif_emp_vals)
         self.state = 'confirmerV'
 
     # @api.multi
@@ -354,31 +355,31 @@ class ordre_mission(models.Model):
     def s_refuser(self):
         # self.state = 'refuser'
 
-        for refus in self:
-            # refus_id=refus['id']
-            mail_vals = {
-                'body': '<html> La demande d\'ordre de mission est refusé  </html>',
-                'record_name': "Demande d'ordre de mission refusée",
-                # 'res_id':refus.id,
-                'reply_to': self.env['res.users'].sudo().browse().name,
-                'author_id': self.env['res.users'].sudo().browse().partner_id.id,
-                'model': 'ordre.mission',
-                'email_from': self.env['res.users'].sudo().browse().name,
-                'starred': True,
-            }
-            message = self.env['mail.message'].sudo().create(mail_vals)
+        # for refus in self:
+        #     # refus_id=refus['id']
+        #     mail_vals = {
+        #         'body': '<html> La demande d\'ordre de mission est refusé  </html>',
+        #         'record_name': "Demande d'ordre de mission refusée",
+        #         # 'res_id':refus.id,
+        #         'reply_to': self.env['res.users'].sudo().browse().name,
+        #         'author_id': self.env['res.users'].sudo().browse().partner_id.id,
+        #         'model': 'ordre.mission',
+        #         'email_from': self.env['res.users'].sudo().browse().name,
+        #         'starred': True,
+        #     }
+        #     message = self.env['mail.message'].sudo().create(mail_vals)
 
-            mail_notif_emp_vals = {
+        #     mail_notif_emp_vals = {
 
-                # 'partner_id':self.env['res.users'].browse(refus.employee_id.user_id.id).partner_id.id,
-                # 'res_partner_id': self.env['res.users'].browse(refus_id).partner_id.id,
-                'res_partner_id': self.env['res.users'].sudo().browse(refus.employee_id.user_id.id).partner_id.id,
+        #         # 'partner_id':self.env['res.users'].browse(refus.employee_id.user_id.id).partner_id.id,
+        #         # 'res_partner_id': self.env['res.users'].browse(refus_id).partner_id.id,
+        #         'res_partner_id': self.env['res.users'].sudo().browse(refus.employee_id.user_id.id).partner_id.id,
 
-                'mail_message_id': message.id,
-                'is_read': False,
-                # 'starred': True,
-            }
-            self.env['mail.notification'].sudo().create(mail_notif_emp_vals)
+        #         'mail_message_id': message.id,
+        #         'is_read': False,
+        #         # 'starred': True,
+        #     }
+        #     self.env['mail.notification'].sudo().create(mail_notif_emp_vals)
         # self.state = 'refuser'
         self.sudo().write({'state': 'refuser'})
         return True
@@ -393,10 +394,10 @@ class ordre_mission(models.Model):
             self.date_aut_aff = datetime.strftime(date_x, "%Y-%m-%d")
             print("self.date_aut_aff*********************", self.date_aut_aff)
 
-    def reset_sequence(self):
-        sequences = self.env['ir.sequence'].search([('name', '=like', 'Ordre Mission')])
-        sequences.write({'number_next': 1})
-        return None
+    # def reset_sequence(self):
+    #     sequences = self.env['ir.sequence'].search([('name', '=like', 'Ordre Mission')])
+    #     sequences.write({'number_next': 1})
+    #     return None
 
     @api.model
     def create(self, values):
@@ -428,12 +429,14 @@ class ordre_mission(models.Model):
             name = values.get('name', False)
             employee_id = values.get('employee_id', False)
             employee = self.env['hr.employee'].browse(employee_id)
-            seq_miss_company = self.env['ir.sequence'].search(
-                [('company_id', '=', employee.company_id.id), ('code', '=', 'ord.miss.ref'),
-                 ('name', '=', 'Ordre Mission')])
-            # values['name'] = self.env['ir.sequence'].next_by_id(seq_miss_company.id)
-            # contract_id = super(hr_contract, self).create( vals)
-            values['name'] = self.env['ir.sequence'].get('ord.miss.ref') or ' '
+            # seq_miss_company = self.env['ir.sequence'].search(
+            #     [('company_id', '=', employee.company_id.id), ('code', '=', 'ord.miss.ref'),
+            #      ('name', '=', 'Ordre Mission')])
+            # # values['name'] = self.env['ir.sequence'].next_by_id(seq_miss_company.id)
+            # # contract_id = super(hr_contract, self).create( vals)
+            # values['name'] = self.env['ir.sequence'].get('ord.miss.ref') or ' '
+            if values.get('name', 'New') == 'New':
+                values['name']= self.env['ir.sequence'].next_by_code('ord.miss.ref') or 'New'
             print(values['name'])
             res = super(ordre_mission, self).create(values)
             return res

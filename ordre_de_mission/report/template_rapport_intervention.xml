@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<template id="report_ordre_mission">
+<template id="report_rapport_intervention">
 
 <t t-call="web.html_container">
     <div class="header" position="replace">
@@ -23,10 +23,128 @@
 
                 <div class="page">
                 
-                <span t-field="o.client_id" />
-
+                <strong><h1 class="font-italic font-weight-bold" style="text-align:center; color: #002266;"> Rapport d'Intervention </h1></strong>
+                <div class="partie_1_tableau" style="margin-top: 30px;">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col" style="color:black; background-color:#002266; text-align: right;">Ordre de mission:</th>
+                          
+                          
+                          <td scope="col" colspan="3"><span t-field="o.mission_id"/></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th style="color:black; background-color:#002266; text-align: right;">Client:</th>
+                          <td><span t-field="o.client_id" /></td>
+                          <th style="color:black; background-color:#002266; text-align: right;">Projet:</th>
+                          <td><span t-field="o.projet_id" /></td>
+                        </tr>
+                        <tr>
+                              <th style="color:black; background-color:#002266; text-align: right;">Date:</th>
+                          <td><span t-esc="o.create_date.strftime('%d/%m/%Y')" /></td>
+                          <th style="color:black; background-color:#002266; text-align: right;">Durée:</th>
+                          <td><span t-field="o.duree" /> day(s)</td>
+                        </tr>
                         
+                    </tbody>
+                    </table>
                 </div>
+                <div class="partie_2_tableau" style="margin-top: 30px;">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col" style="color:black; background-color:#002266; text-align: center;">Intervenants I-Way</th>
+                          <th style="color:black; background-color:#002266; text-align: center;">Intervenants Client</th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td scope="col">
+                            <ol>
+                            <t t-foreach="o.employes" t-as="employe">
+                                <li><p t-field="employe.name" /></li>
+                            </t>
+                            </ol>
+                          </td>
+                          <td scope="col">
+                            <ol>
+                            <t t-foreach="o.clients" t-as="client">
+                                <li><p t-field="client.name" /></li>
+                            </t>
+                            </ol>
+                          </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                <div class="partie_3_tableau" style="margin-top: 30px;">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                              <th scope="col" style="color:black; background-color:#002266; text-align: center;">Description</th>
+                              <th style="color:black; background-color:#002266; text-align: center;">Statut (En cours/Clôturé)</th>
+                              <th style="color:black; background-color:#002266; text-align: center;">Responsable</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.line_t_ids" t-as="line">
+                                <tr>
+
+
+                                    <td scope="col">
+                                        <p t-field="line.description" style="width:300px;" />
+                                    </td>
+                                    <td scope="col">
+                                        <p t-field="line.status" />
+                                    </td>
+                                    <td scope="col">
+                                        <p t-field="line.employes" />
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                <div class="partie_4_tableau" style="margin-top: 30px;">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                              <th scope="col" style="color:black; background-color:#002266; text-align: center;">Commentaires</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="col">
+                                    <p style="height:45px; width:150px; max-width:150px;" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>            
+                <div class="partie_5_tableau" style="margin-top: 30px;">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                              <th scope="col" style="color:black; background-color:#002266; text-align: center;">Signature Intervenant I-Way</th>
+                              <th scope="col" style="color:black; background-color:#002266; text-align: center;">Signature Intervenant Client</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="col">
+                                    <p style="height:70px; width:75px; max-width:75px;" />
+                                </td>
+                                <td scope="col">
+                                    <p style="height:70px; width:75px; max-width:75px;" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+            </div>
+            </div>
             </t>
         </t>
     </t>

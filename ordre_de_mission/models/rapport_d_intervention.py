@@ -17,10 +17,9 @@ class RapportIntervention(models.Model):
 
     duree = fields.Char()
     name = fields.Char(string="Sequence", readonly=True,
-                           required = True, copy = False, index = True,
+                            copy = False, index = True,
                            default=lambda self: _('New'))
-    
-
+    # dateNow = fields.Datetime(default=datetime.now())
 
     # @api.onchange('mission_id')
     # def missions(self):
@@ -50,7 +49,10 @@ class RapportIntervention(models.Model):
         dateInputMinConverted = datetime.strptime(values['date_begin'], "%Y-%m-%d %H:%M:%S")
         dateInputMaxConverted = datetime.strptime(values['date_end'], "%Y-%m-%d %H:%M:%S")
 
-
+        # dateNowCreate = datetime.strptime(values['dateNow'], "%Y-%m-%d")
+        # print(f"datenoooowww {dateNowCreate}")
+        # values['dateNow'] = dateNowCreate
+        # print(values)
         def CheckDatesValidation(record):
             dateLimitMin = datetime.strftime(record['heureDebut'], "%Y-%m-%d")
             dateLimitMax = datetime.strftime(record['heureFin'], "%Y-%m-%d")
@@ -108,11 +110,12 @@ class RapportIntervention(models.Model):
         elif(Error):
             raise exceptions.ValidationError(f"L'intervalle des dates d'un rapport d'intervention doit être dans l'intersection des dates des ordres de mission sélectionnés")
         else:
-            duree = dateInputMaxConverted-dateInputMinConverted+timedelta(days=1)
+            duree = (dateInputMaxConverted-dateInputMinConverted+timedelta(days=1)).days
             values['duree'] = duree
             if values.get('name', 'New') == 'New':
                 values['name']= self.env['ir.sequence'].next_by_code('rapport.intervention.ref') or 'New'
             res = super(RapportIntervention, self).create(values)
+            # raise exceptions.ValidationError(f"Les missions de {ErrorCausedByNames} ne sont pas inclus")
             return res
 
 class RapportInterventionLinesTaches(models.Model):

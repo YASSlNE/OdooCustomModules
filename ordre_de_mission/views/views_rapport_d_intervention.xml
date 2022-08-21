@@ -13,12 +13,12 @@
 
 
 
-    <record model="ir.ui.view" id="clinique.view_docteurs">
+    <record model="ir.ui.view" id="view_rapport_intervention">
       <field name="name">Liste des Docteurs</field>
       <field name="model">rapport.intervention</field>
       <field name="arch" type="xml">
         <tree>
-            <field name="name" />
+            <field name="name" widget="handle"/>
             <field name="mission_id" />
             <field name="client_id" />
             <field name="projet_id" />

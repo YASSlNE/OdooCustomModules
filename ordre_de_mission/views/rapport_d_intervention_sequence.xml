@@ -6,7 +6,7 @@
 			<!--<field name="code">ord.miss.ref</field>-->
 		<!--</record>-->
 		<!--Sequence-->
-		<record id="ir_sequence_ordre_mission" model="ir.sequence">
+		<record id="ir_sequence_rapport_intervention" model="ir.sequence">
 			<field name="name">Rapport d'Intervention Sequence</field>
 			<field name="code">rapport.intervention.ref</field>
 			<field name="prefix">RI N°</field>
