@@ -45,7 +45,7 @@
                               <th style="color:black; background-color:#002266; text-align: right;">Date:</th>
                           <td><span t-esc="o.create_date.strftime('%d/%m/%Y')" /></td>
                           <th style="color:black; background-color:#002266; text-align: right;">Durée:</th>
-                          <td><span t-field="o.duree" /> day(s)</td>
+                          <td><span t-field="o.duree" /> jour(s)</td>
                         </tr>
                         
                     </tbody>
