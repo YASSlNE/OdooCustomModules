@@ -34,6 +34,7 @@
         'report/report_rapport_intervention.xml',
         'report/template_rapport_intervention.xml',
         'views/views_releve_presence.xml',
+        'views/releve_presence_sequence.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

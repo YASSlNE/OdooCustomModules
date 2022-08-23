@@ -6,10 +6,10 @@
 			<!--<field name="code">ord.miss.ref</field>-->
 		<!--</record>-->
 		<!--Sequence-->
-		<record id="ir_sequence_rapport_intervention" model="ir.sequence">
-			<field name="name">Rapport d'Intervention Sequence</field>
-			<field name="code">rapport.intervention.ref</field>
-			<field name="prefix">RI N°</field>
+		<record id="ir_sequence_releve_presence" model="ir.sequence">
+			<field name="name">Releve de Presence Sequence</field>
+			<field name="code">releve.presence.ref</field>
+			<field name="prefix">RP N°</field>
 			<field name="suffix">/%(year)s</field>
 			<field name="padding">3</field>
 			<field name="number_increment">1</field>

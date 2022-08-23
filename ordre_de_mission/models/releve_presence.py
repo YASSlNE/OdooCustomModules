@@ -3,12 +3,21 @@ from datetime import datetime, timedelta
 import inspect
 class ReleveDePresence(models.Model):
 	_name = 'releve.presence'
+
 	mission_id = fields.Many2one('ordre.mission')
-	date_begin = fields.Datetime()
-	date_end = fields.Datetime()
+	date_begin = fields.Date()
+	date_end = fields.Date()
 	employe_id = fields.Many2one('hr.employee', related='mission_id.employee_id', readonly=True)
 	job_id = fields.Many2one('hr.job', related='employe_id.job_id', readonly=True)
 	lines = fields.One2many('releve.presence.lines', 'parent')
+	name = fields.Char(string="Sequence", readonly=True,
+                            copy = False, index = True,
+                           default=lambda self: _('New'))
+	@api.model
+	def create(self, values):
+		if values.get('name', 'New') == 'New':
+			values['name']= self.env['ir.sequence'].next_by_code('releve.presence.ref') or 'New'
+			return super(ReleveDePresence, self).create(values)
 
 class ReleveDePresenceLines(models.Model):
 	_name = 'releve.presence.lines'
