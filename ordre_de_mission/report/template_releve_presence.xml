@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_releve_presence">
+
+<t t-call="web.html_container">
+    <div class="header" position="replace">
+    <div class="header" id="header_attestation_2">
+    <t t-foreach="docs" t-as="o">
+    <table style="width:100%;">
+        <thead>values['name']</thead>
+    </table>
+</t>
+    </div>
+    </div>
+</t>
+
+</template>
+
+<template id="report_releve_presence">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    MLQSKDJFMLQSDKFJSQMLDKFJ
+                </div>
+            </t>
+        </t>
+    </t>
+
+</template>
+</odoo>

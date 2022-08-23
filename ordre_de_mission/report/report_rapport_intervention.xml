@@ -4,7 +4,7 @@
     id="hr_employee_buttom_rapport_intervention_qweb"
     model="rapport.intervention"
     string="Rapport d'Intervention"
-    report_type="qweb-html"
+    report_type="qweb-pdf"
     name="ordre_de_mission.report_rapport_intervention"
     file="ordre_de_mission.report_rapport_intervention"
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<report
+    id="hr_employee_buttom_releve_presence_qweb"
+    model="releve.presenece"
+    string="Releve de Presence"
+    report_type="qweb-html"
+    name="ordre_de_mission.report_releve_presence"
+    file="ordre_de_mission.report_releve_presence"
+
+/>
+
+</odoo>
+
