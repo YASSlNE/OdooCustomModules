@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <template id="assets_backend" name="js assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script 
+                    type="text/javascript" 
+                    src="script.js">
+                 </script>
+            </xpath>
+        </template>
+
+
+        <record id="action_creation_releve_presence" model="ir.actions.act_window">
+			<field name="name">Releve de presence</field>
+			<field name="res_model">releve.presence</field>
+			<field name="view_mode">tree,kanban,form</field>
+		</record>
+
+
+
+
+
+
+		<record id ="releve_presence_report_form_view" model ="ir.ui.view" >
+
+   <field name ="name" > My Model view form </field>
+
+   <field name ="model" >releve.presence</field>
+
+   <field name ="arch" type ="xml" >
+       <form>
+           <sheet name ="My model" >
+               <group>
+                   <group col ="1" >
+                    <field name="mission_id" />
+               </group>
+               <group col="2">
+                    <field name="employe_id"/>
+                    <field name="job_id"/>
+               </group>
+                <group col ="3">
+                	<field name="date_begin" widget="daterange" options="{'related_end_date': 'date_end'}"/>
+                    <field name="date_end" widget="daterange" options="{'related_start_date': 'date_begin'}"/>
+                </group>
+                        <!--           <group colspan="3">
+                   <group col ="1">
+                   </group>
+                </group> -->
+               </group>
+               <notebook>
+                       <page string ="Taches" >
+                           <field name ="lines" widget ="section_and_note_one2many " attrs="{'readonly':[('date_end','=',False)]}"
+                                  mode ="tree" context ="{'default_my_id': active_id}" >
+                               <tree string ="Example Lines" editable ="bottom" >
+                                   <control>
+                                       <create name ="add_line_control" string ="Add a record" />
+                                   </control>
+                                   <field name="date"/>
+                                   <field name="description"/>
+                               </tree>
+                           </field>
+                       </page>
+                </notebook>
+           </sheet>
+       </form>
+   </field>
+</record>
+
+
+
+
+
+
+
+
+
+
+
+        <menuitem name="Releve de presence"  id="menu_releve_presence" sequence="3" />
+        <menuitem action="action_creation_releve_presence" name="Releve de presence" id="menu_releve_de_presence_sub" parent="menu_releve_presence" sequence="1" />
+    </data>
+</odoo>

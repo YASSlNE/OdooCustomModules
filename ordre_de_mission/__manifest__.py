@@ -33,7 +33,7 @@
         'views/rapport_d_intervention_sequence.xml',
         'report/report_rapport_intervention.xml',
         'report/template_rapport_intervention.xml',
-
+        'views/views_releve_presence.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

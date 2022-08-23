@@ -33,9 +33,7 @@
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                          <th scope="col" style="color:black; background-color:#002266; text-align: right;">Ordre de mission:</th>
-                          
-                          
+                          <th scope="col" style="color:black; background-color:#002266; text-align: right;">Ordre de mission:</th>   
                           <td scope="col" colspan="3"><span t-field="o.mission_id"/></td>
                         </tr>
                       </thead>
