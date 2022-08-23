@@ -22,7 +22,12 @@
             <t t-call="web.external_layout">
 
                 <div class="page">
-                
+                    <style>
+                        thead tr{
+                                page-break-inside: avoid;
+                                break-inside: avoid;
+                        }
+                    </style>
                 <strong><h1 class="font-italic font-weight-bold" style="text-align:center; color: #002266;"> Rapport d'Intervention </h1></strong>
                 <div class="partie_1_tableau" style="margin-top: 30px;">
                     <table class="table table-bordered">
@@ -81,7 +86,7 @@
                     </table>
                 </div>
                 <div class="partie_3_tableau" style="margin-top: 30px;">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" style="page-break-inside: avoid">
                         <thead>
                             <tr>
                               <th scope="col" style="color:black; background-color:#002266; text-align: center;">Description</th>
@@ -123,7 +128,7 @@
                         </tbody>
                     </table>
                 </div>            
-                <div class="partie_5_tableau" style="margin-top: 30px;">
+                <div class="partie_5_tableau" style="page-break-inside: avoid!important">
                     <table class="table table-bordered">
                         <thead>
                             <tr>

@@ -133,9 +133,10 @@
            <sheet name ="My model" >
                <group>
                    <group col ="1" >
+                    <field name="created" invisible="1" />
                    	<field options="{'create': false, 'create_edit': false}" style="margin-bottom: 30px;" name ="employes" string="Intervenants employés" widget="many2many_tags"/>
-                   	<field options="{'create': false, 'create_edit': false}" style="margin-bottom: 30px;" name ="client_id"  attrs="{'readonly':[('employes','=',False)]}"/>
-                   	<field options="{'create': false, 'create_edit': false}" style="margin-bottom: 30px;" name ="projet_id"  attrs="{'readonly':[('employes','=',False)]}"/>
+                   	<field options="{'create': false, 'create_edit': false}" style="margin-bottom: 30px;" name ="client_id"  attrs="{'readonly':[('created','=',True)]}"/>
+                   	<field options="{'create': false, 'create_edit': false}" style="margin-bottom: 30px;" name ="projet_id"  attrs="{'readonly':[('created','=',True)]}"/>
                    	<field options="{'create': false, 'create_edit': false}" style="margin-bottom: 30px;" name ="mission_id" widget="many2many_tags"  attrs="{'readonly':['|', ('client_id','=',False), ('projet_id','=',False)]}"/>
                    	<field options="{'create': false, 'create_edit': false}" name ="clients" string="Intervenants clients" widget="many2many_tags"  attrs="{'readonly':[('client_id','=',False)]}"/>
                </group>
@@ -158,7 +159,7 @@
                                    </control>
                                    <field name="description" />
                                    <field name="status" />
-                                   <field name="employes"/>
+                                   <field name="employes" domain="[('id', 'in', parent.employes)]"/>
                                </tree>
                            </field>
                        </page>
