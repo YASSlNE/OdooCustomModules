@@ -21,7 +21,14 @@
         <t t-foreach="docs" t-as="o">
             <t t-call="web.external_layout">
                 <div class="page">
-                    MLQSKDJFMLQSDKFJSQMLDKFJ
+                    <strong><h1 class="font-italic font-weight-bold" style="text-align:center; color: #002266;"> Releve de Présence </h1></strong>
+                    <div style="box-sizing: border-box;">
+                      <p>Nom du collaborateur :<span t-esc="o.employe_id.name"/></p>
+                      <p>Fonction dans la société :<span t-esc="o.job_id.name"/></p>
+                      <p>Raison sociale du Client :<span /></p>
+                      <p>Mois :<span/></p>
+                      <p>Ordre de mission :<span t-esc="o.mission_id.name"/></p>
+                    </div>
                 </div>
             </t>
         </t>
