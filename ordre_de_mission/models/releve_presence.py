@@ -1,5 +1,6 @@
 from odoo import models, fields, api, exceptions, _
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
+from dateutil.rrule import rrule, MONTHLY
 import inspect
 class ReleveDePresence(models.Model):
 	_name = 'releve.presence'
@@ -13,12 +14,25 @@ class ReleveDePresence(models.Model):
 	name = fields.Char(string="Sequence", readonly=True,
                             copy = False, index = True,
                            default=lambda self: _('New'))
+	client_id = fields.Many2one('res.partner', related='mission_id.client_id', readonly=True)
+	mois = fields.Char()
 	@api.model
 	def create(self, values):
+		print("----------------------------------------------------------------------")
+		date_begin_converted = datetime.strptime(values['date_begin'], "%Y-%m-%d")
+		date_end_converted = datetime.strptime(values['date_end'], "%Y-%m-%d")
+		dates = [dt.strftime("%B") for dt in rrule(MONTHLY, dtstart=date_begin_converted, until=date_end_converted)]
+		values['mois'] = str(dates).replace("'","").replace("]","").replace("[","")
 		if values.get('name', 'New') == 'New':
 			values['name']= self.env['ir.sequence'].next_by_code('releve.presence.ref') or 'New'
 			return super(ReleveDePresence, self).create(values)
 
+
+	def months(self):
+		records = self.env['releve.presence'].search([('id', '=', self.id)])
+		mois = records['mois']
+		mois_seperated = mois.split(',')
+		return mois_seperated
 class ReleveDePresenceLines(models.Model):
 	_name = 'releve.presence.lines'
 	parent = fields.Many2one('releve.presence')
