@@ -34,18 +34,19 @@
        <form>
            <sheet name ="My model" >
                <group>
-                   <group col ="1" >
+                   <group colspan="1" col ="1" >
                     <field name="mission_id" />
                </group>
-               <group col="2">
+               <group colspan="1" col="2">
                     <field name="employe_id"/>
                     <field name="job_id"/>
+                    <field name="client_id"/>
                </group>
-                <group col ="3">
+                <group colspan="1" col ="3">
                 	<field name="date_begin" widget="daterange" options="{'related_end_date': 'date_end'}"/>
                     <field name="date_end" widget="daterange" options="{'related_start_date': 'date_begin'}"/>
                 </group>
-                        <!--           <group colspan="3">
+                        <!--           <group colspan="1">
                    <group col ="1">
                    </group>
                 </group> -->
@@ -59,7 +60,7 @@
                                        <create name ="add_line_control" string ="Add a record" />
                                    </control>
                                    <field name="date"/>
-                                   <field name="description"/>
+                                   <field name="description" string="Commentaire"/>
                                </tree>
                            </field>
                        </page>

@@ -68,14 +68,14 @@
                           <td scope="col">
                             <ol>
                             <t t-foreach="o.employes" t-as="employe">
-                                <li><p t-field="employe.name" /></li>
+                                <li style="margin-left: 15px;"><p t-field="employe.name" /></li>
                             </t>
                             </ol>
                           </td>
                           <td scope="col">
                             <ol>
                             <t t-foreach="o.clients" t-as="client">
-                                <li><p t-field="client.name" /></li>
+                                <li style="margin-left: 15px;"><p style="margin-left: 15px;" t-field="client.name" /></li>
                             </t>
                             </ol>
                           </td>

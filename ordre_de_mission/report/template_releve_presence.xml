@@ -9,11 +9,10 @@
     <table style="width:100%;">
         <thead>values['name']</thead>
     </table>
-</t>
-    </div>
-    </div>
-</t>
-
+    </t>
+        </div>
+        </div>
+    </t>
 </template>
 
 <template id="report_releve_presence">
@@ -23,13 +22,30 @@
                 <div class="page">
                     <strong><h1 class="font-italic font-weight-bold" style="text-align:center; color: #002266;"> Releve de Présence </h1></strong>
                     <div style="box-sizing: border-box;">
-                      <p>Nom du collaborateur :<span t-esc="o.employe_id.name"/></p>
-                      <p>Fonction dans la société :<span t-esc="o.job_id.name"/></p>
-                      <p>Raison sociale du Client :<span /></p>
-                      <p>Mois :<span/></p>
-                      <p>Ordre de mission :<span t-esc="o.mission_id.name"/></p>
+                      <p>Nom du collaborateur :<span style="margin-left: 15px;" t-esc="o.employe_id.name"/></p>
+                      <p>Fonction dans la société :<span style="margin-left: 15px;" t-esc="o.job_id.name"/></p>
+                      <p>Raison sociale du Client :<span style="margin-left: 15px;" t-esc="o.client_id.name"/></p>
+                      <p>Mois :<span style="margin-left: 15px;" t-esc="o.mois"/></p>
+                      <p>Ordre de mission :<span style="margin-left: 15px;" t-esc="o.mission_id.name"/></p>
                     </div>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col" style="color:black; background-color:#002266; text-align: center;">Jours travaillé</th>   
+                          <th scope="col" style="color:black; background-color:#002266; text-align: center;">Commentaires</th>   
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <t t-foreach="o.months()" t-as="month_name">        
+                        <tr>
+                          <td colspan="2" style="color:black; text-align: center;">Mois: <snap t-esc="month_name" /></td>
+                        </tr>
+                    </t>        
+                    </tbody>
+                    </table>
                 </div>
+
+                <!-- <snap t-esc="o.months()" /> -->
             </t>
         </t>
     </t>
