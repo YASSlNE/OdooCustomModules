@@ -30,9 +30,16 @@ class ReleveDePresence(models.Model):
 
 	def months(self):
 		records = self.env['releve.presence'].search([('id', '=', self.id)])
-		mois = records['mois']
-		mois_seperated = mois.split(',')
-		return mois_seperated
+		date_start = records['date_begin']
+		date_end = records['date_end']
+		date_generated = daterangemaker(date_start, date_end)
+		return date_generated
+
+	def daterangemaker(start_date, end_date):
+		start = datetime.datetime.strptime(date1, "%Y-%m-%d")
+		end = datetime.datetime.strptime(date2, "%Y-%m-%d")
+		date_generated = [start + datetime.timedelta(days=x) for x in range(0, (end-start).days)]
+		return date_generated
 class ReleveDePresenceLines(models.Model):
 	_name = 'releve.presence.lines'
 	parent = fields.Many2one('releve.presence')
