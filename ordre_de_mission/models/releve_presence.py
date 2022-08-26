@@ -15,6 +15,9 @@ class ReleveDePresence(models.Model):
                            default=lambda self: _('New'))
 	@api.model
 	def create(self, values):
+		def diff_month(d1, d2):
+			return (d1.year - d2.year) * 12 + d1.month - d2.month
+		
 		if values.get('name', 'New') == 'New':
 			values['name']= self.env['ir.sequence'].next_by_code('releve.presence.ref') or 'New'
 			return super(ReleveDePresence, self).create(values)
