@@ -29,16 +29,16 @@ class ReleveDePresence(models.Model):
 
 
 	def months(self):
+		def daterangemaker(start_date, end_date):
+			# start = datetime.strptime(start_date, "%Y-%m-%d")
+			# end = datetime.strptime(end_date, "%Y-%m-%d")
+			date_generated = [start_date + timedelta(days=x) for x in range(0, (end_date-start_date).days)]
+			return date_generated
+
 		records = self.env['releve.presence'].search([('id', '=', self.id)])
 		date_start = records['date_begin']
 		date_end = records['date_end']
 		date_generated = daterangemaker(date_start, date_end)
-		return date_generated
-
-	def daterangemaker(start_date, end_date):
-		start = datetime.datetime.strptime(date1, "%Y-%m-%d")
-		end = datetime.datetime.strptime(date2, "%Y-%m-%d")
-		date_generated = [start + datetime.timedelta(days=x) for x in range(0, (end-start).days)]
 		return date_generated
 class ReleveDePresenceLines(models.Model):
 	_name = 'releve.presence.lines'

@@ -20,7 +20,7 @@
         <t t-foreach="docs" t-as="o">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <strong><h1 class="font-italic font-weight-bold" style="text-align:center; color: #002266;"> Releve de Présence </h1></strong>
+                    <strong><h1 class="font-italic font-weight-bold" style="text-align:center; color: #002266;"> Relevé de Présence </h1></strong>
                     <div style="box-sizing: border-box;">
                       <p>Nom du collaborateur :<span style="margin-left: 15px;" t-esc="o.employe_id.name"/></p>
                       <p>Fonction dans la société :<span style="margin-left: 15px;" t-esc="o.job_id.name"/></p>
@@ -37,132 +37,14 @@
                       </thead>
                       <tbody>
                         <t t-foreach="o.months()" t-as="month_name">        
+                            <t t-if="month_name.day==1">
                         <tr>
-                          <td colspan="2" style="color:black; text-align: center;">Mois: <snap t-esc="month_name" /></td>
+                        <td colspan="2" style="color:black; text-align: center;">Mois : <snap t-esc="month_name.strftime('%B')" /> </td>
                         </tr>
+                    </t>
                         <tr>
-                            <td style="color:black; text-align: center;">01</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">02</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">03</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">04</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">05</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">06</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">07</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">08</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">09</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">10</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">11</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">12</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">13</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">14</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">15</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">16</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">17</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">18</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">19</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">20</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">21</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">22</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">23</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">24</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">25</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">26</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">27</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">28</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">29</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">30</td>
-                            <td style="color:black; text-align: center;"></td>
-                        </tr>
-                        <tr>
-                            <td style="color:black; text-align: center;">31</td>
-                            <td style="color:black; text-align: center;"></td>
+                         <td style="color:black; text-align: center;"><snap t-esc="month_name" /></td>
+                        <td style="color:black; text-align: center;"></td>
                         </tr>
                         </t>        
                         </tbody>
